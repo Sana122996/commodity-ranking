@@ -9,16 +9,12 @@
         --primary: #235de6; 
         --secondary: #E02424;
         --tertiary: #057A55;
-        --neutral: #F3F4F6;
         --primary-rgb: 35, 93, 230;
         --secondary-rgb: 224, 36, 36;
         --tertiary-rgb: 5, 122, 85;
-        --bg: #FFFFFF; /* 强制白底 */
-        --panel: #FFFFFF; /* 强制白底 */
-        --line: rgba(35, 93, 230, 0.12);
+        --bg: #FFFFFF; /* 强制绝对白底 */
         --text: #111111;
         --sub: rgba(17, 17, 17, 0.58);
-        --accent: var(--primary);
         --page-max-width: 500px;
       }
 
@@ -28,14 +24,14 @@
         margin: 0;
         font-family: "Inter", "Roboto", "Noto Sans CJK SC", sans-serif;
         color: var(--text);
-        background: var(--bg);
+        background: #FFFFFF; /* 强制白底 */
       }
 
-      .layout { min-height: 100vh; display: block; width: 100%; max-width: 100%; margin: 0 auto; background: var(--bg); }
+      .layout { min-height: 100vh; display: block; width: 100%; max-width: 100%; margin: 0 auto; background: #FFFFFF; }
 
       .sidebar {
-        border-bottom: 1px solid var(--line);
-        background: var(--bg);
+        border-bottom: 1px solid rgba(35, 93, 230, 0.12);
+        background: #FFFFFF; /* 去除渐变，强制白底 */
         padding: 18px 14px 12px;
         display: flex; flex-direction: column; gap: 12px;
       }
@@ -55,10 +51,10 @@
       .mode-btn:not(.active) { background: #f2f6ff; color: var(--primary); border: 1px solid #dce5fc; }
       .mode-btn .caret { font-size: 10px; }
 
-      /* === 新版底部弹出分栏选择器 === */
+      /* === 底部弹出分栏选择器 === */
       .picker-overlay {
         position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; 
-        display: none; align-items: flex-end; justify-content: center; /* 底部对齐 */
+        display: none; align-items: flex-end; justify-content: center; 
         opacity: 0; transition: opacity 0.2s ease;
       }
       .picker-overlay.is-open { display: flex; opacity: 1; }
@@ -85,15 +81,12 @@
       .picker-col-right { width: 60%; background: #ffffff; overflow-y: auto; }
       
       .picker-item { padding: 16px 20px; text-align: left; font-size: 15px; color: #333; cursor: pointer; }
-      
-      /* 左侧选中态：浅蓝背景 */
       .picker-col-left .picker-item.active { background: #e6f0ff; color: var(--primary); font-weight: 600; border-left: 3px solid var(--primary); padding-left: 17px; }
-      /* 右侧选中态：纯蓝字加粗 */
       .picker-col-right .picker-item.active { color: var(--primary); font-weight: 600; display: flex; justify-content: space-between; }
       .picker-col-right .picker-item.active::after { content: "✓"; color: var(--primary); }
 
-      /* === 面板及全白背景重构 === */
-      .main { padding: 14px 14px 20px; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
+      /* === 看板与树图 === */
+      .main { padding: 14px 14px 20px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; /* 强制白底 */ }
       .header-row { display: flex; justify-content: flex-start; gap: 8px; align-items: flex-start; padding-top: 2px; }
       .title-stack { display: flex; flex-direction: column; gap: 6px; }
       .headline-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -107,7 +100,6 @@
       .hero-title { color: var(--text); font-size: 15px; font-weight: 500; line-height: 1.45; }
       .hero-title strong { color: var(--primary); font-weight: 600; font-size: 30px; line-height: 1; letter-spacing: -0.03em; margin: 4px 2px; display: inline-block; }
       
-      /* 树图白底 */
       .treemap-shell { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
       .treemap { position: relative; min-height: 320px; border-radius: 16px; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); }
       .treemap-block { position: absolute; padding: 11px; border: 1px solid #FFFFFF; overflow: hidden; }
@@ -117,7 +109,6 @@
       .treemap-value { font-size: 20px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; white-space: nowrap; }
       .treemap-value-sub { font-size: 10px; font-weight: 700; opacity: 0.9; line-height: 1.3; white-space: nowrap; }
       
-      /* 自适应隐藏极小模块字体 */
       .treemap-block-compact { padding: 9px; }
       .treemap-block-compact .treemap-name { font-size: 13px; }
       .treemap-block-compact .treemap-value { font-size: 15px; }
@@ -126,15 +117,14 @@
       .treemap-block-tiny .treemap-block-inner { gap: 2px; }
       .treemap-block-tiny .treemap-name, .treemap-block-tiny .treemap-value { font-size: 11px; }
       .treemap-block-tiny .treemap-value-sub { display: none; }
-      .treemap-block-micro .treemap-block-inner { display: none; } /* 面积太小直接隐藏文字 */
+      .treemap-block-micro .treemap-block-inner { display: none; }
 
       .treemap-active { color: #fff; }
       .treemap-gap { color: #fff; background: linear-gradient(135deg, #f78787, #E02424); }
+      .treemap-other { color: #333; background: #f0f0f0; } /* 为第15名以后的“其他”保留浅色样式 */
       
-      /* 看板样式 */
       .board { background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 16px; }
       .board-overview { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 0 2px; margin-bottom: 14px; }
-      .board-overview-text { font-size: 14px; line-height: 1.7; color: var(--text); }
       
       .sim-card { background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 12px; margin-bottom: 14px; }
       .sim-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
@@ -166,14 +156,28 @@
       .ranking-item.offline .percentage-value { color: var(--secondary); }
       .section-label { margin: 16px 0 8px; color: var(--sub); font-size: 12px; font-weight: 700; }
 
+      /* === 事件面板样式（原汁原味保留） === */
+      .event-panel { display: grid; grid-template-columns: 1fr; gap: 14px; }
+      .event-card { background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 14px; }
+      .event-topline { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+      .event-eyebrow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .event-kicker { font-size: 12px; font-weight: 500; color: var(--text); }
+      .event-date { font-size: 12px; color: var(--sub); }
+      .event-type { display: inline-flex; align-items: center; padding: 5px 9px; border-radius: 999px; background: rgba(var(--tertiary-rgb), 0.06); border: 1px solid rgba(var(--tertiary-rgb), 0.12); color: var(--tertiary); font-size: 11px; font-weight: 500; line-height: 1; }
+      .event-card h3 { margin: 0 0 8px; font-size: 16px; color: var(--text); font-weight: 600; }
+      .event-summary { margin: 0; font-size: 13px; line-height: 1.7; color: var(--text); }
+      .event-impact { margin-top: 12px; padding: 12px; border-radius: 16px; background: rgba(var(--secondary-rgb), 0.04); border: 1px solid rgba(var(--secondary-rgb), 0.1); }
+      .event-impact-label { font-size: 11px; color: var(--secondary); font-weight: 700; margin-bottom: 4px; }
+      .event-impact-text { font-size: 13px; line-height: 1.7; color: var(--secondary); }
+
       .footnote { margin-top: 8px; color: var(--sub); font-size: 12px; line-height: 1.5; }
 
       @media (min-width: 1041px) {
         .layout { width: min(calc(100% - 40px), var(--page-max-width)); }
-        .sidebar { border-right: 0; border-bottom: 1px solid var(--line); padding: 18px; }
+        .sidebar { border-right: 0; border-bottom: 1px solid rgba(35, 93, 230, 0.12); padding: 18px; }
         .main { padding: 16px 18px 22px; }
         .picker-dialog { border-radius: 16px; margin: auto; height: 500px; transform: translateY(20px); }
-        .picker-overlay { align-items: center; } /* PC端居中 */
+        .picker-overlay { align-items: center; } 
       }
     </style>
   </head>
@@ -220,6 +224,8 @@
           </div>
           <div id="board"></div>
         </section>
+
+        <section class="event-panel" id="eventPanel"></section>
 
         <p class="footnote">
           数据说明：本内容数据均基于公开资料综合测算。其中，矿产及农产品数据主要参考全球权威行业部门公开估算数据；能化板块数据综合采纳国际能源监管组织等市场公开信息。
@@ -272,6 +278,11 @@
         "Oceania": ["Australia", "Papua New Guinea", "New Zealand", "New Caledonia"]
       };
       
+      const CONTINENT_ZH_MAP = {
+        "Asia": "亚洲", "Europe": "欧洲", "North America": "北美洲", 
+        "South America": "南美洲", "Africa": "非洲", "Oceania": "大洋洲", "all": "全部大洲"
+      };
+
       function getContinentEn(countryEn) {
         for (const [cont, countries] of Object.entries(CONTINENT_MAP)) {
           if (countries.includes(countryEn)) return cont;
@@ -285,16 +296,27 @@
       const FLAG_EMOJI_MAP = { "中国": "🇨🇳", "美国": "🇺🇸", "澳大利亚": "🇦🇺", "俄罗斯": "🇷🇺", "印度": "🇮🇳", "巴西": "🇧🇷", "欧盟": "🇪🇺", "阿根廷": "🇦🇷", "印尼": "🇮🇩", "加拿大": "🇨🇦", "墨西哥": "🇲🇽", "秘鲁": "🇵🇪", "智利": "🇨🇱", "沙特阿拉伯": "🇸🇦", "日本": "🇯🇵", "韩国": "🇰🇷", "德国": "🇩🇪", "英国": "🇬🇧", "法国": "🇫🇷", "伊朗": "🇮🇷", "伊拉克": "🇮🇶", "阿联酋": "🇦🇪", "卡塔尔": "🇶🇦", "科威特": "🇰🇼", "马来西亚": "🇲🇾", "泰国": "🇹🇭", "越南": "🇻🇳", "菲律宾": "🇵🇭", "新加坡": "🇸🇬", "南非": "🇿🇦", "刚果（金）": "🇨🇩", "几内亚": "🇬🇳", "马达加斯加": "🇲🇬", "尼日利亚": "🇳🇬", "玻利维亚": "🇧🇴", "波兰": "🇵🇱", "哈萨克斯坦": "🇰🇿", "白俄罗斯": "🇧🇾", "阿曼": "🇴🇲", "缅甸": "🇲🇲", "塔吉克斯坦": "🇹🇯", "中国台湾地区": "🇹🇼" };
       const UNIT_ZH_MAP = { "metric tons": "吨", "thousand metric tons": "千吨", "thousand metric dry tons": "千干吨", "ten thousand metric tons": "万吨", "million metric tons": "万吨", "million 480-lb bales": "百万包（480磅/包）", "million barrels per day": "万桶/日" };
       const VALUE_TYPE_ZH_MAP = { "Production": "产量" };
-      const HOT_TOPIC_TAGS = { "原油": ["地缘政治核心"], "锡": ["半导体咽喉"] };
       
-      /* 色板拓展，应对全量数据 */
+      // 保证你的事件字典能生效
+      const HOT_TOPIC_TAGS = window.HOT_TOPIC_TAGS || { "原油": ["地缘政治核心"], "锡": ["半导体咽喉"] };
+      
+      /* 色板扩充，保障前15名颜色区分度 */
       const TREEMAP_COLORS = [
-        "linear-gradient(145deg, #235DE6 0%, #1A47BA 100%)",
-        "linear-gradient(145deg, #057A55 0%, #035A3F 100%)",
-        "linear-gradient(145deg, #E02424 0%, #B81D1D 100%)",
-        "linear-gradient(145deg, #D97706 0%, #B26205 100%)",
-        "linear-gradient(145deg, #7E3AF2 0%, #5E2CBA 100%)",
-        "linear-gradient(145deg, #4A5568 0%, #343C4A 100%)"
+        "linear-gradient(145deg, #1A56DB 0%, #174BBF 100%)",
+        "linear-gradient(145deg, #057A55 0%, #046345 100%)",
+        "linear-gradient(145deg, #E02424 0%, #C81E1E 100%)",
+        "linear-gradient(145deg, #D97706 0%, #B46305 100%)",
+        "linear-gradient(145deg, #7E3AF2 0%, #6830C7 100%)",
+        "linear-gradient(145deg, #0694A2 0%, #057A85 100%)",
+        "linear-gradient(145deg, #1C64F2 0%, #1A56DB 100%)",
+        "linear-gradient(145deg, #16BDCA 0%, #159EA9 100%)",
+        "linear-gradient(145deg, #FACA15 0%, #E3B712 100%)",
+        "linear-gradient(145deg, #9061F9 0%, #7E55D9 100%)",
+        "linear-gradient(145deg, #1E429F 0%, #1A3A8A 100%)",
+        "linear-gradient(145deg, #046C4E 0%, #03543F 100%)",
+        "linear-gradient(145deg, #9B1C1C 0%, #771D1D 100%)",
+        "linear-gradient(145deg, #9F580A 0%, #8A4C09 100%)",
+        "linear-gradient(145deg, #5521B5 0%, #4A1D9E 100%)"
       ];
 
       function getFlagEmoji(countryZh) { return FLAG_EMOJI_MAP[countryZh] || "🏳️"; }
@@ -328,7 +350,23 @@
       function selectedCommodity() { return allProducts.find(c => c.commodity_en === appliedCommodity) || allProducts[0] || null; }
       function selectedCountryProfile() { const profiles = buildCountryProfiles(CORE_COUNTRIES, allProducts); return profiles.find(c => c.country_en === appliedCountry) || profiles[0] || null; }
 
-      // --- 级联 Picker 渲染逻辑 ---
+      // --- 顶部按钮文案动态更新 ---
+      function updateButtonTexts() {
+        if (appliedMode === 'commodity') {
+          const commObj = allProducts.find(p => p.commodity_en === appliedCommodity);
+          const commName = commObj ? commObj.commodity_zh : appliedCommodity;
+          const majorName = appliedMajor === 'all' ? '全部分类' : appliedMajor;
+          document.getElementById('btnModeCommodity').innerHTML = `${majorName}-${commName} <span class="caret">▼</span>`;
+          document.getElementById('btnModeCountry').innerHTML = `按国家/地区分类 <span class="caret">▼</span>`;
+        } else {
+          const contName = CONTINENT_ZH_MAP[appliedContinent] || appliedContinent;
+          const countryZh = toCountryZh(appliedCountry);
+          document.getElementById('btnModeCountry').innerHTML = `${contName}-${countryZh} <span class="caret">▼</span>`;
+          document.getElementById('btnModeCommodity').innerHTML = `按品种分类 <span class="caret">▼</span>`;
+        }
+      }
+
+      // --- Picker 逻辑 ---
       const pickerModal = document.getElementById('customPickerModal');
       
       function openPicker(mode) {
@@ -343,7 +381,7 @@
           tempCountry = appliedCountry;
         }
         pickerModal.classList.add('is-open');
-        renderPickerLeft(); // 这会连锁调用 Right
+        renderPickerLeft(); 
       }
 
       function renderPickerLeft() {
@@ -367,30 +405,23 @@
         let html = '';
         if (tempMode === 'commodity') {
           let products = tempMajor === 'all' ? allProducts : allProducts.filter(p => p.group_major === tempMajor);
-          // 若当前选中的小类不在新大类里，自动切换为新大类的第一个小类
-          if (!products.some(p => p.commodity_en === tempCommodity) && products.length > 0) {
-             tempCommodity = products[0].commodity_en;
-          }
+          if (!products.some(p => p.commodity_en === tempCommodity) && products.length > 0) { tempCommodity = products[0].commodity_en; }
           products.forEach(p => html += `<div class="picker-item ${tempCommodity === p.commodity_en ? 'active' : ''}" data-val="${p.commodity_en}">${p.commodity_zh}</div>`);
         } else {
           let profiles = buildCountryProfiles(CORE_COUNTRIES, allProducts);
           if (tempContinent !== 'all') profiles = profiles.filter(p => getContinentEn(p.country_en) === tempContinent);
-          // 自动切换逻辑
-          if (!profiles.some(p => p.country_en === tempCountry) && profiles.length > 0) {
-             tempCountry = profiles[0].country_en;
-          }
+          if (!profiles.some(p => p.country_en === tempCountry) && profiles.length > 0) { tempCountry = profiles[0].country_en; }
           profiles.forEach(p => html += `<div class="picker-item ${tempCountry === p.country_en ? 'active' : ''}" data-val="${p.country_en}">${p.country_zh}</div>`);
         }
         rightCol.innerHTML = html;
       }
 
-      // --- Picker 事件监听 ---
       document.getElementById('pickerLeftCol').addEventListener('click', e => {
         const item = e.target.closest('.picker-item');
         if(item) {
           if(tempMode === 'commodity') tempMajor = item.getAttribute('data-val');
           else tempContinent = item.getAttribute('data-val');
-          renderPickerLeft(); // 级联刷新
+          renderPickerLeft();
         }
       });
       document.getElementById('pickerRightCol').addEventListener('click', e => {
@@ -403,6 +434,7 @@
         }
       });
       document.getElementById('pickerCancel').addEventListener('click', () => pickerModal.classList.remove('is-open'));
+      
       document.getElementById('pickerConfirm').addEventListener('click', () => {
         appliedMode = tempMode;
         if (appliedMode === 'commodity') { appliedMajor = tempMajor; appliedCommodity = tempCommodity; } 
@@ -411,6 +443,7 @@
         document.getElementById('btnModeCommodity').classList.toggle('active', appliedMode === 'commodity');
         document.getElementById('btnModeCountry').classList.toggle('active', appliedMode === 'country');
         
+        updateButtonTexts(); // 触发按钮文案更新
         pickerModal.classList.remove('is-open');
         renderBoard();
       });
@@ -419,7 +452,6 @@
       document.getElementById('btnModeCountry').addEventListener('click', () => openPicker('country'));
 
 
-      // --- 核心推演计算 ---
       function getCommoditySimulationState(commodity) {
         if (!commodity) return { disruptionSet: new Set(), disruptedEntries: [], activeEntries: [], disruptedValue: 0, remainingTotal: 0, simulationActive: false, gapPct: 0, rankedEntries: [] };
         const set = getDisruptionSet(commodity.commodity_en);
@@ -433,7 +465,6 @@
         };
       }
 
-      // --- 树图全量显示逻辑 ---
       function splitTreemapNodes(nodes) {
         const total = nodes.reduce((sum, n) => sum + n.value, 0);
         let running = 0, bestIndex = 1, smallestDiff = Infinity;
@@ -458,8 +489,9 @@
             nodes.push({ key: "gap", label: "若产生断供", value: simState.disruptedValue, shareLabel: simState.gapPct.toFixed(2) + "%", kind: "gap" });
         }
         
-        // 全量推入剩余未断供的国家/地区，不再截断(slice(0,5))
-        const activeNodes = simState.rankedEntries.map((e, idx) => ({ 
+        // 【核心修改】提取前 15 名用于展示
+        const top15 = simState.rankedEntries.slice(0, 15);
+        const activeNodes = top15.map((e, idx) => ({ 
             key: e.country_en, 
             label: toCountryZh(e.country_en, e.country_zh), 
             value: Number(e.value || 0), 
@@ -467,8 +499,21 @@
             kind: "active", 
             color: TREEMAP_COLORS[idx % TREEMAP_COLORS.length] 
         }));
-        
         nodes.push(...activeNodes);
+
+        // 第 16 名及以后合并为“其他”
+        const otherEntries = simState.rankedEntries.slice(15);
+        if (otherEntries.length > 0) {
+            const otherValue = otherEntries.reduce((s, e) => s + Number(e.value || 0), 0);
+            nodes.push({
+                key: "other",
+                label: "其他",
+                value: otherValue,
+                shareLabel: ((otherValue / commodity.world_total) * 100).toFixed(2) + "%",
+                kind: "other"
+            });
+        }
+
         return nodes.filter(n => n.value > 0);
       }
 
@@ -480,12 +525,11 @@
         
         const html = layout.map(node => {
           const area = node.width * node.height;
-          // 自适应文字隐藏：面积过小则应用微小样式
           const sizeClass = (node.width < 10 || node.height < 10 || area < 100) ? " treemap-block-micro" 
                             : (area < 250) ? " treemap-block-tiny" 
                             : (area < 500) ? " treemap-block-compact" : "";
           
-          return `<div class='treemap-block ${node.kind === "gap" ? "treemap-gap" : "treemap-active"} ${sizeClass}' style='left:${node.x}%;top:${node.y}%;width:${node.width}%;height:${node.height}%;${node.kind === "active" ? "background:" + node.color : ""}'>
+          return `<div class='treemap-block ${node.kind === "gap" ? "treemap-gap" : node.kind === "other" ? "treemap-other" : "treemap-active"} ${sizeClass}' style='left:${node.x}%;top:${node.y}%;width:${node.width}%;height:${node.height}%;${node.kind === "active" ? "background:" + node.color : ""}'>
             <div class='treemap-block-inner'><div><div class='treemap-name'>${escapeHtml(node.label)}</div></div>
             <div><div class='treemap-value'>${escapeHtml(node.kind === "gap" ? node.shareLabel : formatDisplayValue(node.value, commodity.unit))}</div><div class='treemap-value-sub'>${node.shareLabel}</div></div></div></div>`;
         }).join("");
@@ -502,10 +546,44 @@
         simBody.innerHTML = `<div class='sim-alert'>若执行断供，全球将出现 <strong>${gapPct.toFixed(2)}%</strong> 的绝对缺口。</div><div class='sim-meta'>剩余可供量：${formatDisplayValue(remainingTotal, commodity.unit)} ${translateUnit(commodity.unit)}</div><div class='sim-pills'>${disruptedEntries.map(e => `<span class='sim-pill'>${escapeHtml(toCountryZh(e.country_en, e.country_zh))}</span>`).join("")}</div>`;
       }
 
+      // 【完全恢复】的历史冲击面板渲染
+      function renderEventPanel(commodity) {
+        const panel = document.getElementById("eventPanel");
+        if (!commodity || appliedMode !== "commodity") {
+            panel.innerHTML = "";
+            return;
+        }
+        
+        // 调用全局 EVENT_CASES，若无数据则自动隐藏面板
+        const cases = window.EVENT_CASES && window.EVENT_CASES[commodity.commodity_zh] ? window.EVENT_CASES[commodity.commodity_zh] : [];
+        if (!cases || cases.length === 0) {
+            panel.innerHTML = "";
+            return;
+        }
+        
+        let html = `<div class='section-label'>历史断供/冲击复盘</div>`;
+        html += cases.map(c => `
+            <div class="event-card">
+                <div class="event-topline">
+                    <div class="event-eyebrow">
+                        <span class="event-type">${escapeHtml(c.type || '历史事件')}</span>
+                        <span class="event-kicker">${escapeHtml(c.kicker || '')}</span>
+                    </div>
+                    <span class="event-date">${escapeHtml(c.date || '')}</span>
+                </div>
+                <h3>${escapeHtml(c.title || '')}</h3>
+                <p class="event-summary">${escapeHtml(c.summary || '')}</p>
+                ${c.impact ? `<div class="event-impact"><div class="event-impact-label">核心影响</div><div class="event-impact-text">${escapeHtml(c.impact)}</div></div>` : ''}
+            </div>
+        `).join("");
+        
+        panel.innerHTML = html;
+      }
+
       function renderCommodityBoard() {
         const commodity = selectedCommodity();
         const boardEl = document.getElementById("board");
-        if (!commodity) { boardEl.innerHTML = "<div>暂无数据</div>"; return; }
+        if (!commodity) { boardEl.innerHTML = "<div>暂无数据</div>"; document.getElementById("eventPanel").innerHTML = ""; return; }
 
         const simState = getCommoditySimulationState(commodity);
         const { disruptedEntries, activeEntries, remainingTotal, simulationActive, rankedEntries } = simState;
@@ -513,8 +591,10 @@
         document.getElementById("boardTitle").textContent = commodity.commodity_zh + "供应排行";
         document.getElementById("boardSubTitle").textContent = `口径：${translateValueType(commodity.value_type)} | 年份：${commodity.year} | 单位：${translateUnit(commodity.unit)}`;
         setBoardTags(getTopicTags(commodity.commodity_zh));
+        
         renderHeroPanel(commodity, simState);
         renderSimulationPanel(commodity, disruptedEntries, remainingTotal, simState.gapPct);
+        renderEventPanel(commodity); // 触发事件面板渲染
         
         const maxShare = Math.max(...rankedEntries.map(e => simulationActive ? e.adjusted_share : e.share_pct), 1);
 
@@ -570,12 +650,13 @@
       function renderCountryBoard() {
         const profile = selectedCountryProfile();
         const boardEl = document.getElementById("board");
-        if (!profile) { boardEl.innerHTML = "<div>暂无数据</div>"; return; }
+        if (!profile) { boardEl.innerHTML = "<div>暂无数据</div>"; document.getElementById("eventPanel").innerHTML = ""; return; }
         
         document.getElementById("boardTitle").textContent = profile.country_zh + "核心品种贡献";
         setBoardTags([]);
         renderHeroPanel(null, null);
         renderSimulationPanel(null, [], 0, 0);
+        document.getElementById("eventPanel").innerHTML = ""; // 国家模式清空事件
         document.getElementById("boardSubTitle").textContent = "按该国家/地区在各品种全球占比排序";
 
         const entries = profile.entries;
@@ -610,7 +691,6 @@
         else renderCommodityBoard();
       }
 
-      // --- 页面初始化与委托监听 ---
       document.getElementById('board').addEventListener("click", (event) => {
         const btn = event.target.closest(".sim-toggle");
         if (!btn) return;
@@ -622,6 +702,8 @@
         clearDisruptions(appliedCommodity); renderBoard();
       });
 
+      // 初始化文案及看板
+      updateButtonTexts();
       renderBoard();
     </script>
   </body>
