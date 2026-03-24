@@ -15,6 +15,7 @@
         --bg: #FFFFFF;
         --text: #111111;
         --sub: rgba(17, 17, 17, 0.58);
+        --header-bg: #0A0F1E; /* 新增深色头部背景色 */
         --page-max-width: 500px;
       }
 
@@ -29,41 +30,55 @@
 
       .layout { min-height: 100vh; display: block; width: 100%; max-width: 100%; margin: 0 auto; background: #FFFFFF; }
 
+      /* === 根据image_d74604.jpg修改头部样式 === */
       .sidebar {
-        border-bottom: 1px solid rgba(90, 130, 230, 0.12);
-        background: #FFFFFF;
-        padding: 18px 14px 12px;
-        display: flex; flex-direction: column; gap: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--header-bg); /* 深色背景 */
+        padding: 10px 14px; /* 调整高度 */
+        display: flex; flex-direction: column; gap: 8px;
+        align-items: center; /* 居中对齐所有子元素 */
       }
 
-      .masthead { display: flex; flex-direction: column; gap: 4px; }
-      .brand-lockup { display: inline-flex; align-items: center; margin-bottom: 4px; }
+      /* 头部内容居中排版 */
+      .masthead { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 100%; }
+      .brand-lockup { display: flex; align-items: center; gap: 8px; justify-content: center; }
       .brand-logo { display: block; width: 104px; height: auto; }
       
-      .title-wrapper { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; }
+      .title-wrapper { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; justify-content: center; }
+      
+      /* 修改标题颜色为白色，以适应深色背景 */
       .title { 
         margin: 0; 
-        font-size: 31px; 
-        line-height: 1.08; 
-        letter-spacing: -0.045em; 
-        font-weight: 900; 
+        font-size: 18px; /* 调整字体大小，使头部看起来更像导航栏 */
+        line-height: 1.2; 
+        color: #FFFFFF; /* 白色文字 */
+        letter-spacing: -0.01em; 
+        font-weight: 700; 
         font-family: "Source Han Serif Heavy", "Source Han Serif SC", "Noto Serif CJK SC", "思源宋体", serif;
+        text-align: center;
       }
+      
+      /* 隐藏原来的全宽图片，改为居中的小图标，或根据需要不显示大图 */
       .header-icon { 
-        width: 100%; 
-        height: auto; 
-        display: block; 
-        border-radius: 8px;
+        display: none; /* 根据参考图，大背景图已被居中logo取代，这里隐藏它 */
+      }
+      
+      /* 用于替换原来图片的居中小图标 placeholder */
+      .header-center-logo {
+          width: 24px;
+          height: 24px;
+          display: block;
       }
 
-      .mode-toolbar { display: flex; gap: 10px; margin-top: 4px; }
+      .mode-toolbar { display: flex; gap: 10px; margin-top: 4px; width: 100%; max-width: 300px; } /* 限制宽度并居中 */
       .mode-btn {
         flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
-        height: 44px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
+        height: 36px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
       }
       .mode-btn.active { background: var(--primary); color: #ffffff; border: 1px solid var(--primary); }
-      .mode-btn:not(.active) { background: #F1F5FF; color: #5A82E6; border: 1px solid #F1F5FF; }
-      .mode-btn .caret { font-size: 10px; }
+      /* 调整非激活按钮在深色背景下的颜色 */
+      .mode-btn:not(.active) { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; border: 1px solid transparent; }
+      .mode-btn .caret { font-size: 9px; opacity: 0.8; }
 
       .picker-overlay {
         position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; 
@@ -182,7 +197,7 @@
 
       @media (min-width: 1041px) {
         .layout { width: min(calc(100% - 40px), var(--page-max-width)); }
-        .sidebar { border-right: 0; border-bottom: 1px solid rgba(90, 130, 230, 0.12); padding: 18px; }
+        .sidebar { border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 18px; } /* 电脑端保留背景和对齐 */
         .main { padding: 16px 18px 22px; }
         .picker-dialog { border-radius: 16px; margin: auto; height: 500px; transform: translateY(20px); }
         .picker-overlay { align-items: center; } 
@@ -197,8 +212,9 @@
             <img class="brand-logo" src="./logo-jin10.svg" alt="金十数据 Logo" />
           </div>
           <div class="title-wrapper">
-            <h1 class="title">全球大宗商品产量版图</h1>
-            <img class="header-icon" src="./header-icon-placeholder.png" alt="头图" />
+              <img class="header-center-logo" src="./logo-jin10.svg" style="display:none;" alt="居中Logo" /> 
+              <h1 class="title">全球大宗商品产量版图</h1>
+              <img class="header-icon" src="./header-icon-placeholder.png" alt="头图" />
           </div>
         </div>
 
@@ -394,7 +410,7 @@
         锡: { date: "2024-09", type: "矿山停产", title: "缅甸佤邦停产持续收紧全球锡原料", summary: "锡近年的典型扰动，几乎都绕不开缅甸佤邦矿山。", impact: "缅甸佤邦核心锡矿长期停产后，市场对锡精矿供应担忧升温，原料链稳定性成为交易核心。", source_name: "Reuters" },
         镍: { date: "2025-01", type: "供应过剩", title: "印尼主导的过剩格局压低镍价中枢", summary: "镍近两年的最强主线，是印尼产能扩张重塑全球定价。", impact: "印尼持续扩张产能导致全球镍市长期过剩，价格重心下移，市场开始关注印尼是否会主动控量。", source_name: "Reuters" },
         黄金: { date: "2025-02", type: "央行购金", title: "全球央行持续购金重塑黄金需求结构", summary: "黄金近年的代表性冲击，是央行购金与地缘避险共振。", impact: "央行保持高强度购金，叠加地缘与美元信用担忧，需求结构被重塑，金价多次刷新历史高位。", source_name: "新华社" },
-        煤炭: { date: "2025-06", type: "供需错配", title: "供给增长与替代能源扩张压低煤价中枢", summary: "煤炭典型扰动是供给走高、需求偏弱与替代能源扩张的共振。", impact: "全国原煤产量增长叠加煤炭进口创历史新高，新能源替代导致煤价中枢明显下移。", source_name: "新华网" },
+        煤炭: { date: "2025-06", type: "供需错配", title: "电力保供支点保障原煤产量稳定", summary: "原煤产量在“电力保供”背景下维持增长运行。", impact: "全国原煤产量增长叠加煤炭进口创历史新高，新能源替代导致煤价中枢明显下移。", source_name: "新华网" },
         燃料油: { date: "2026-03", type: "地缘冲击", title: "中东局势升级放大燃料油供应与运费风险", summary: "燃料油显著扰动多来自中东地缘、船燃供应和运费保费抬升。", impact: "霍尔木兹封锁预期下，全球海运高硫燃料油供应受扰，高低硫燃料油价格被共同推高。", source_name: "中信期货" },
         甲醇: { date: "2026-03", type: "地缘冲击", title: "霍尔木兹受扰放大甲醇进口收缩预期", summary: "甲醇关键冲击之一是海外装置与进口到港节奏受扰。", impact: "霍尔木兹航运停滞期间，甲醇主力合约连续涨停，体现市场对中东供应与进口收缩的高度敏感。", source_name: "第一财经" },
         纯碱: { date: "2024-07", type: "产能扩张", title: "新增产能释放重塑纯碱景气周期", summary: "纯碱代表性冲击是高利润诱发扩产，随后供给压力反制价格。", impact: "国内纯碱新增产能巨大，纯碱价格从高位回落，本质是新产能释放后的再平衡。", source_name: "证券时报" },
@@ -405,7 +421,7 @@
         小麦: { date: "2022-02", type: "地缘冲突", title: "俄乌冲突冲击黑海小麦出口", summary: "小麦经典冲击是黑海出口链条受阻。", impact: "俄乌冲突令全球小麦贸易面临极高不确定性，国际小麦价格一度处于历史高位并显著波动。", source_name: "USDA" },
         玉米: { date: "2012-07", type: "严重干旱", title: "美国大旱推升全球玉米价格", summary: "玉米经典冲击往往来自美国天气。", impact: "大旱导致美国玉米减产并推动价格升至历史高位，出口明显收缩。", source_name: "USDA" },
         稻米: { date: "2023-07", type: "出口限制", title: "印度限制大米出口引发全球米市收紧", summary: "稻米市场对主要出口国政策极度敏感。", impact: "印度出口限制压制了全球贸易量并推高国际米价，迅速改变了现货流向。", source_name: "USDA" },
-        棕榈油: { date: "2022-04", type: "出口禁令", title: "印尼出口禁令扰动全球植物油供应", summary: "棕榈油典型冲击是主产国政策改变全球供给。", impact: "印尼实施出口禁令后全球供应趋紧，禁令取消后价格才明显回落。", source_name: "FAO" },
+        棕榈油: { date: "2022-04", type: "出口禁令", title: "印尼出口禁令扰动全球植物油供应", summary: "棕榈油典型冲击是主产国政策改变全球供给。", impact: "印尼出口禁令后全球供应趋紧，禁令取消后价格才明显回落。", source_name: "FAO" },
         白糖: { date: "2023-09", type: "天气冲击", title: "厄尔尼诺预期推升全球糖价至多年高位", summary: "白糖冲击多为主产国产量预期同时收缩。", impact: "市场担忧厄尔尼诺削弱印度、泰国等主产国产量，国际糖价升至十多年最高水平。", source_name: "FAO" },
         油菜籽: { date: "2021-08", type: "极端干旱", title: "加拿大大旱重创油菜籽供给", summary: "油菜籽历史冲击绕不开加拿大天气因素。", impact: "大范围干旱导致加拿大油菜籽产量大幅下降，全球菜籽供应随即趋紧。", source_name: "Agriculture Canada" },
         苹果: { date: "2018-04", type: "霜冻灾害", title: "春季霜冻导致中国苹果减产", summary: "苹果的冲击常体现为天气对产量的集中打击。", impact: "严重霜冻导致中国苹果和梨大幅减产，国内供应偏紧且价格明显抬升。", source_name: "USDA FAS" },
