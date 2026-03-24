@@ -41,7 +41,7 @@
       .brand-logo { display: block; width: 104px; height: auto; }
       .title { margin: 0; font-size: 31px; line-height: 1.08; letter-spacing: -0.045em; font-weight: 800; }
 
-      /* === 顶部双按钮（你的 UI） === */
+      /* === 顶部双按钮 === */
       .mode-toolbar { display: flex; gap: 10px; margin-top: 4px; }
       .mode-btn {
         flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -51,7 +51,7 @@
       .mode-btn:not(.active) { background: #f2f6ff; color: var(--primary); border: 1px solid #dce5fc; }
       .mode-btn .caret { font-size: 10px; }
 
-      /* === 底部弹出分栏选择器（你的 UI） === */
+      /* === 底部弹出分栏选择器 === */
       .picker-overlay {
         position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; 
         display: none; align-items: flex-end; justify-content: center; 
@@ -86,7 +86,7 @@
       .picker-col-right .picker-item.active::after { content: "✓"; color: var(--primary); }
 
       /* === 看板主体 === */
-      .main { padding: 14px 14px 20px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; /* 强制白底 */ }
+      .main { padding: 14px 14px 20px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; }
       .header-row { display: flex; justify-content: flex-start; gap: 8px; align-items: flex-start; padding-top: 2px; }
       .title-stack { display: flex; flex-direction: column; gap: 6px; }
       .headline-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -103,22 +103,19 @@
       .treemap-shell { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
       .treemap { position: relative; min-height: 320px; border-radius: 16px; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); }
       
-      /* 新版树图色块样式：去边框、纯色底 */
       .treemap-block { position: absolute; padding: 0; overflow: hidden; transition: opacity 0.3s ease; border: 1px solid #FFFFFF; }
       .treemap-block-inner { position: relative; z-index: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 4px; padding: 4px; overflow: hidden; }
       
-      /* 防溢出控制 */
       .treemap-name { font-size: 14px; font-weight: 800; line-height: 1.1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
       .treemap-value { font-size: 16px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
       .treemap-value-sub { font-size: 10px; font-weight: 700; opacity: 0.9; line-height: 1.3; white-space: nowrap; }
       
-      /* 自适应隐藏 */
       .treemap-block-compact .treemap-name { font-size: 12px; }
       .treemap-block-compact .treemap-value { font-size: 14px; }
       .treemap-block-compact .treemap-value-sub { font-size: 9px; }
       .treemap-block-tiny .treemap-name, .treemap-block-tiny .treemap-value { font-size: 11px; }
       .treemap-block-tiny .treemap-value-sub { display: none; }
-      .treemap-block-micro .treemap-block-inner { display: none; } /* 块太小时完全隐藏文字 */
+      .treemap-block-micro .treemap-block-inner { display: none; }
       
       .board { background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 16px; }
       .board-overview { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 0 2px; margin-bottom: 14px; }
@@ -133,7 +130,7 @@
       .sim-pill { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 999px; background: rgba(var(--tertiary-rgb), 0.05); border: 1px solid rgba(var(--tertiary-rgb), 0.1); color: var(--tertiary); font-size: 11px; font-weight: 700; }
       .sim-empty { display: none; }
 
-      /* === 下方排行榜样式（你的 UI） === */
+      /* === 下方排行榜样式 === */
       .ranking-item { background-color: #fff; border-radius: 8px; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
       .board .ranking-item:last-child { border-bottom: none; padding-bottom: 0; }
       .board .ranking-item:first-child { padding-top: 0; }
@@ -147,13 +144,13 @@
       .bar-chart-container { display: flex; align-items: center; }
       .bar-chart { flex-grow: 1; height: 32px; background-color: rgba(var(--primary-rgb), 0.06); border-radius: 6px; overflow: hidden; position: relative; margin-right: 12px; }
       .bar-fill { height: 100%; background-color: var(--primary); display: flex; align-items: center; justify-content: flex-start; padding-left: 10px; transition: width 0.3s ease; border-radius: 6px; min-width: fit-content; }
-      .ranking-item.offline .bar-fill { background-color: var(--secondary); opacity: 0.5; } /* 列表停产也半透明 */
+      .ranking-item.offline .bar-fill { background-color: var(--secondary); opacity: 0.5; }
       .absolute-value { color: #fff; font-size: 13px; font-weight: 500; white-space: nowrap; padding-right: 10px; }
       .percentage-value { color: var(--primary); font-weight: 700; font-size: 15px; white-space: nowrap; min-width: 50px; text-align: right; }
       .ranking-item.offline .percentage-value { color: var(--secondary); }
       .section-label { margin: 16px 0 8px; color: var(--sub); font-size: 12px; font-weight: 700; }
 
-      /* === 事件面板样式（完美保留） === */
+      /* === 事件面板样式 === */
       .event-panel { display: grid; grid-template-columns: 1fr; gap: 14px; }
       .event-card { background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 14px; }
       .event-topline { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -299,20 +296,54 @@
       
       const HOT_TOPIC_TAGS = window.HOT_TOPIC_TAGS || { "原油": ["地缘政治核心"], "锡": ["半导体咽喉"] };
       
-      /* 色板扩充：参考你提供的纯色平铺图 */
+      /* 【修改点2】色板扩充：前6名全部使用不同明度的深蓝/浅蓝，确保蓝色为主基调，辅以暖色点缀 */
       const TREEMAP_COLORS = [
-        "#C2593F", "#F7D273", "#2C7BE5", "#DE4922", "#183B67",
-        "#34A4EB", "#5A6C7A", "#007491", "#F59F00", "#7C8A96",
-        "#E57E5A", "#E5A93B", "#1F5999", "#4693D9", "#A63512"
+        "#1A56DB", "#2C7BE5", "#183B67", "#4693D9", "#1F5999", "#34A4EB",
+        "#C2593F", "#F7D273", "#DE4922", "#5A6C7A", "#007491", 
+        "#F59F00", "#7C8A96", "#E57E5A", "#E5A93B", "#A63512"
       ];
 
-      /* 历史大事件全集 */
+      /* 【修改点1】补全的历史大事件全集 */
       const EVENT_CASES = {
         原油: { date: "2026-03", type: "地缘冲突", title: "霍尔木兹梗阻引发原油供应危机预期", summary: "原油最直接、最剧烈的冲击，仍然来自关键海峡受阻与地缘军事升级。", impact: "新华社多篇报道均指出，霍尔木兹海峡承担全球约五分之一的原油运输。2026 年 3 月海峡一度几乎停航，国际原油价格迅速突破 100 美元/桶，全球原油供应安全预期明显恶化。", source_name: "新华网" },
-        LNG: { date: "2026-03", type: "航运梗阻", title: "霍尔木兹受阻放大 LNG 供应风险", summary: "LNG 近年的典型冲击，来自霍尔木兹海峡这一全球天然气航运要道。", impact: "印度现为全球第四大 LNG 买家，大量进口依赖中东；霍尔木兹海峡航运受阻后，卡塔尔等中东供应缩减，印度被迫优先保障关键行业用气。", source_name: "新华网" },
-        白银: { date: "2026-01", type: "工业需求", title: "光伏用银成本上升推动白银冲高", summary: "白银近年的核心扰动，不只是贵金属属性，而是工业属性重新被市场定价。", impact: "2025 年末至 2026 年初，银价持续冲高，光伏银浆成本明显上升。随着光伏、电气化需求保持韧性，白银转向双逻辑定价。", source_name: "第一财经" },
-        大豆: { date: "2018-07", type: "贸易制裁", title: "中美贸易战改写全球大豆流向", summary: "大豆是最典型的“流向重塑型”冲击：不是全球没豆，而是最核心的买卖双方突然断开。", impact: "2018/19 市场年度前半程，中国自美国进口大豆减少近 2200 万吨，这次事件永久改变了全球大豆贸易地图。", source_name: "USDA ERS" },
-        铜: { date: "2025-03", type: "原料紧缺", title: "铜精矿短缺迫使冶炼厂讨论减产", summary: "铜近年的关键矛盾之一，是矿端紧张与冶炼端扩张错配。", impact: "铜精矿加工费跌至极低水平后，中国铜冶炼厂利润被明显压缩，市场担忧减产与检修扩大，铜价逻辑切换到“原料约束”。", source_name: "Reuters" }
+        LNG: { date: "2026-03", type: "航运梗阻", title: "霍尔木兹受阻放大 LNG 供应风险", summary: "LNG 近年的典型冲击，来自霍尔木兹海峡这一全球天然气航运要道。", impact: "印度现为全球第四大 LNG 买家，其中大量进口依赖中东；霍尔木兹海峡航运受阻后，卡塔尔等中东供应缩减，印度被迫优先保障关键行业和居民用气。", source_name: "新华网" },
+        LPG: { date: "2026-03", type: "航运梗阻", title: "中东动荡冲击 LPG 跨境供应", summary: "LPG 对中东海运依赖度较高，霍尔木兹受扰会直接影响区域采购与到港节奏。", impact: "霍尔木兹海峡基本关闭后，印度一度要求液化石油气优先保障家庭需求，区域 LPG 供应与分配节奏受到实质冲击。", source_name: "新华网" },
+        PTA: { date: "2026-03", type: "地缘冲击", title: "霍尔木兹受扰带动 PTA 成本端快速抬升", summary: "PTA 的近年大扰动，更多体现为油价和芳烃链成本突发上移。", impact: "第一财经指出，霍尔木兹航运受阻引发化工板块普涨，PTA 也受到原油与芳烃成本快速上行的直接拉动。", source_name: "第一财经" },
+        PX: { date: "2026-03", type: "原料扰动", title: "上游供应稳定性担忧推升 PX 强势表现", summary: "PX 的代表性冲击，是上游原料稳定性扰动带来的供需再定价。", impact: "受上游原料供应稳定性担忧影响，亚洲部分 PX 装置进行了预防性降负；同时 PX 检修季开启，PX 在聚酯链中表现偏强。", source_name: "中信建投期货" },
+        乙二醇: { date: "2024-05", type: "产能扩张", title: "国内扩产抬升乙二醇宽松预期", summary: "乙二醇近年的典型冲击，是国内产量快速上升带来的进口替代与利润重估。", impact: "多种石化产品产能累计增幅都在 50% 以上，行业普遍面临过剩与利润承压，乙二醇受到扩产与需求放缓的双重挤压。", source_name: "第一财经" },
+        沥青: { date: "2024-06", type: "政策约束", title: "炼油行业节能降碳政策压缩沥青扩张空间", summary: "沥青近年的重要冲击来自炼化政策端的约束变化。", impact: "炼油行业节能降碳专项行动明确禁止以重油综合利用、沥青装置等名义变相新增炼油产能，属于典型的制度性供给约束。", source_name: "中国能源报" },
+        白银: { date: "2026-01", type: "工业需求", title: "光伏用银成本上升推动白银冲高", summary: "白银近年的核心扰动，是工业属性重新被市场定价。", impact: "2025 年末至 2026 年初，光伏银浆成本明显上升。随着光伏、电气化需求保持韧性，白银从“跟随黄金”转向“贵金属+工业”双逻辑定价。", source_name: "第一财经" },
+        石墨: { date: "2023-10", type: "出口管制", title: "石墨出口许可管理重塑全球电池材料链", summary: "石墨最典型的近年冲击，是政策直接改变全球负极材料供应预期。", impact: "中国对部分石墨产品实施出口许可管理后，全球电池材料供应链重新评估依赖度，石墨被视作关键战略资源。", source_name: "Reuters" },
+        稀土: { date: "2025-04", type: "出口管制", title: "稀土相关物项出口管制升级", summary: "稀土近年的代表性冲击仍然来自政策端，因为其供应高度集中。", impact: "中国对部分稀土相关物项实施出口管制，稀土战略属性进一步强化，全球磁材、军工对供应安全的关注显著升温。", source_name: "新华社" },
+        钴: { date: "2025-03", type: "供应过剩", title: "印尼放量加剧全球钴市过剩", summary: "钴近年的主线不是短缺，而是印尼扩产下的价格重估。", impact: "印尼钴产能快速上升，全球钴市维持过剩格局。钴的估值逻辑从资源稀缺，切换到“新增供给何时出清”。", source_name: "Reuters" },
+        铝: { date: "2026-03", type: "地缘冲突", title: "霍尔木兹风险扰动全球铝供应链", summary: "铝的最新冲击，来自中东运输受阻与海湾冶炼产能扰动。", impact: "中东冲突升级后，海湾地区部分原铝发运与原料运输受阻，全球铝价快速上行，重新进入地缘冲击定价交易。", source_name: "Reuters" },
+        钾盐: { date: "2024-10", type: "供给恢复", title: "俄白回流令全球钾盐市场重回宽松", summary: "钾盐近年的关键冲击，从制裁紧张逐步切换为供给恢复后的价格压力。", impact: "随着俄罗斯和白俄罗斯出口路径修复，全球钾盐供应逐步接近战前水平，价格与利润中枢面临下移压力。", source_name: "Reuters" },
+        铁矿石: { date: "2024-05", type: "政策刺激", title: "地产政策刺激短线提振铁矿石情绪", summary: "铁矿石近年的典型冲击，更多来自中国需求预期的快速摆动。", impact: "中国出台地产支持政策后，铁矿石价格一度反弹，随后转入“政策预期与现实需求博弈”阶段。", source_name: "Reuters" },
+        铅: { date: "2025-04", type: "供应过剩", title: "过剩预期压制铅价弹性", summary: "铅近两年的特征，不是极端短缺，而是供给宽松下的弱弹性运行。", impact: "全球铅市继续面临过剩预期，汽车电池需求增长有限而精炼产量仍偏高，资金配置明显偏谨慎。", source_name: "Reuters" },
+        铜: { date: "2025-03", type: "原料紧缺", title: "铜精矿短缺迫使冶炼厂讨论减产", summary: "铜近年的关键矛盾之一，是矿端紧张与冶炼端扩张错配。", impact: "铜精矿加工费跌至极低水平后，中国铜冶炼厂利润被明显压缩，市场担忧减产，逻辑切换到“原料约束”。", source_name: "Reuters" },
+        电解铝: { date: "2024-07", type: "成本冲击", title: "氧化铝紧张向电解铝成本端强传导", summary: "电解铝近年的重要扰动，更多来自上游氧化铝与铝土矿。", impact: "氧化铝价格走强叠加铝土矿供应担忧，电解铝成本中枢被抬高，市场对高成本产能的敏感度显著上升。", source_name: "Reuters" },
+        铝土矿: { date: "2026-03", type: "出口约束", title: "几内亚拟收紧出口扰动铝土矿市场", summary: "铝土矿近年的最大变量，是几内亚政策与发运节奏。", impact: "几内亚评估限制铝土矿出口后，市场担忧进口来源稳定性，氧化铝和电解铝成本链条随之波动。", source_name: "Reuters" },
+        锂: { date: "2026-01", type: "需求修复", title: "储能需求爆发推动锂价自低位修复", summary: "锂近两年的主线，先是过剩压价，随后转向储能需求修复。", impact: "储能装机与数据中心相关需求增长，锂需求预期改善，市场开始从“持续过剩”转向“供需再平衡”。", source_name: "Reuters" },
+        锌: { date: "2024-10", type: "矿端短缺", title: "矿山收缩令锌市转向供应缺口", summary: "锌近年的主要冲击来自矿端，原料持续趋紧。", impact: "全球锌矿产量连续下滑后，冶炼厂加工费明显走低，锌从预期过剩切换到阶段性缺口交易。", source_name: "Reuters" },
+        锡: { date: "2024-09", type: "矿山停产", title: "缅甸佤邦停产持续收紧全球锡原料", summary: "锡近年的典型扰动，几乎都绕不开缅甸佤邦矿山。", impact: "缅甸佤邦核心锡矿长期停产后，市场对锡精矿供应担忧升温，原料链稳定性成为交易核心。", source_name: "Reuters" },
+        镍: { date: "2025-01", type: "供应过剩", title: "印尼主导的过剩格局压低镍价中枢", summary: "镍近两年的最强主线，是印尼产能扩张重塑全球定价。", impact: "印尼持续扩张产能导致全球镍市长期过剩，价格重心下移，市场开始关注印尼是否会主动控量。", source_name: "Reuters" },
+        黄金: { date: "2025-02", type: "央行购金", title: "全球央行持续购金重塑黄金需求结构", summary: "黄金近年的代表性冲击，是央行购金与地缘避险共振。", impact: "央行保持高强度购金，叠加地缘与美元信用担忧，需求结构被重塑，金价多次刷新历史高位。", source_name: "新华社" },
+        煤炭: { date: "2025-06", type: "供需错配", title: "供给增长与替代能源扩张压低煤价中枢", summary: "煤炭典型扰动是供给走高、需求偏弱与替代能源扩张的共振。", impact: "全国原煤产量增长叠加煤炭进口创历史新高，新能源替代导致煤价中枢明显下移。", source_name: "新华网" },
+        燃料油: { date: "2026-03", type: "地缘冲击", title: "中东局势升级放大燃料油供应与运费风险", summary: "燃料油显著扰动多来自中东地缘、船燃供应和运费保费抬升。", impact: "霍尔木兹封锁预期下，全球海运高硫燃料油供应受扰，高低硫燃料油价格被共同推高。", source_name: "中信期货" },
+        甲醇: { date: "2026-03", type: "地缘冲击", title: "霍尔木兹受扰放大甲醇进口收缩预期", summary: "甲醇关键冲击之一是海外装置与进口到港节奏受扰。", impact: "霍尔木兹航运停滞期间，甲醇主力合约连续涨停，体现市场对中东供应与进口收缩的高度敏感。", source_name: "第一财经" },
+        纯碱: { date: "2024-07", type: "产能扩张", title: "新增产能释放重塑纯碱景气周期", summary: "纯碱代表性冲击是高利润诱发扩产，随后供给压力反制价格。", impact: "国内纯碱新增产能巨大，纯碱价格从高位回落，本质是新产能释放后的再平衡。", source_name: "证券时报" },
+        聚丙烯: { date: "2026-03", type: "成本冲击", title: "油气成本抬升带动聚丙烯价格体系重估", summary: "聚丙烯明显冲击包含原油与丙烯链成本快速抬升。", impact: "能源成本重塑聚丙烯价格体系，供应缩量预期与成本上移共同推高市场重心。", source_name: "隆众资讯" },
+        纯苯: { date: "2026-03", type: "原料断供预期", title: "中东原料风险放大纯苯价格波动", summary: "纯苯核心风险之一是中东原料与芳烃链成本突发扰动。", impact: "中东断供危机冲击石脑油裂解装置，对纯苯而言，原料链受损会直接放大供应与价格波动。", source_name: "隆众资讯" },
+        苯乙烯: { date: "2026-03", type: "检修去库", title: "海内外检修叠加去库预期提振苯乙烯", summary: "苯乙烯典型冲击是供给收缩预期与库存切换。", impact: "国内外装置检修规模大于重启规模，供给存在收缩预期，同时受油价与芳烃链带动明显。", source_name: "证券时报" },
+        大豆: { date: "2018-07", type: "贸易制裁", title: "中美贸易战改写全球大豆流向", summary: "大豆是最典型的“流向重塑型”冲击：买方卖方突然断开。", impact: "中国自美国进口大豆大幅减少，该事件永久改变了全球大豆贸易地图。", source_name: "USDA ERS" },
+        小麦: { date: "2022-02", type: "地缘冲突", title: "俄乌冲突冲击黑海小麦出口", summary: "小麦经典冲击是黑海出口链条受阻。", impact: "俄乌冲突令全球小麦贸易面临极高不确定性，国际小麦价格一度处于历史高位并显著波动。", source_name: "USDA" },
+        玉米: { date: "2012-07", type: "严重干旱", title: "美国大旱推升全球玉米价格", summary: "玉米经典冲击往往来自美国天气。", impact: "大旱导致美国玉米减产并推动价格升至历史高位，出口明显收缩。", source_name: "USDA" },
+        稻米: { date: "2023-07", type: "出口限制", title: "印度限制大米出口引发全球米市收紧", summary: "稻米市场对主要出口国政策极度敏感。", impact: "印度出口限制压制了全球贸易量并推高国际米价，迅速改变了现货流向。", source_name: "USDA" },
+        棕榈油: { date: "2022-04", type: "出口禁令", title: "印尼出口禁令扰动全球植物油供应", summary: "棕榈油典型冲击是主产国政策改变全球供给。", impact: "印尼实施出口禁令后全球供应趋紧，禁令取消后价格才明显回落。", source_name: "FAO" },
+        白糖: { date: "2023-09", type: "天气冲击", title: "厄尔尼诺预期推升全球糖价至多年高位", summary: "白糖冲击多为主产国产量预期同时收缩。", impact: "市场担忧厄尔尼诺削弱印度、泰国等主产国产量，国际糖价升至十多年最高水平。", source_name: "FAO" },
+        油菜籽: { date: "2021-08", type: "极端干旱", title: "加拿大大旱重创油菜籽供给", summary: "油菜籽历史冲击绕不开加拿大天气因素。", impact: "大范围干旱导致加拿大油菜籽产量大幅下降，全球菜籽供应随即趋紧。", source_name: "Agriculture Canada" },
+        苹果: { date: "2018-04", type: "霜冻灾害", title: "春季霜冻导致中国苹果减产", summary: "苹果的冲击常体现为天气对产量的集中打击。", impact: "严重霜冻导致中国苹果和梨大幅减产，国内供应偏紧且价格明显抬升。", source_name: "USDA FAS" },
+        棉花: { date: "2022-08", type: "洪灾冲击", title: "巴基斯坦洪灾扰动全球棉花供给", summary: "棉花历史冲击常来自主产区灾害。", impact: "洪灾致使巴基斯坦棉花产量降至低位，全球市场持续跟踪其进口缺口变化。", source_name: "USDA" }
       };
 
       function getFlagEmoji(countryZh) { return FLAG_EMOJI_MAP[countryZh] || "🏳️"; }
@@ -482,7 +513,7 @@
       function buildTreemapNodes(commodity, simState) {
         const nodes = [];
         
-        // 【核心修改】提取前 15 名用于展示，不因断供而将其移出树图
+        // 前 15 名用于展示
         const top15 = commodity.entries.slice(0, 15);
         const activeNodes = top15.map((e, idx) => {
             const isDisrupted = simState.disruptionSet.has(e.country_en);
@@ -508,7 +539,7 @@
                 value: otherValue,
                 shareLabel: ((otherValue / commodity.world_total) * 100).toFixed(2) + "%",
                 kind: "other",
-                color: "#E2E8F0", // 浅灰底色
+                color: "#E2E8F0", 
                 isDisrupted: false
             });
         }
@@ -549,7 +580,7 @@
         simBody.innerHTML = `<div class='sim-alert'>若执行断供，全球将出现 <strong>${gapPct.toFixed(2)}%</strong> 的绝对缺口。</div><div class='sim-meta'>剩余可供量：${formatDisplayValue(remainingTotal, commodity.unit)} ${translateUnit(commodity.unit)}</div><div class='sim-pills'>${disruptedEntries.map(e => `<span class='sim-pill'>${escapeHtml(toCountryZh(e.country_en, e.country_zh))}</span>`).join("")}</div>`;
       }
 
-      // 完美恢复的历史冲击面板渲染
+      // 完美读取本地 EVENT_CASES，渲染历史冲击面板
       function renderEventPanel(commodity) {
         const panel = document.getElementById("eventPanel");
         if (!commodity || appliedMode !== "commodity") {
@@ -557,11 +588,13 @@
             return;
         }
         
-        const cases = window.EVENT_CASES && window.EVENT_CASES[commodity.commodity_zh] ? [window.EVENT_CASES[commodity.commodity_zh]] : [];
-        if (!cases || cases.length === 0 || !cases[0]) {
+        const rawCase = EVENT_CASES[commodity.commodity_zh] || (window.EVENT_CASES && window.EVENT_CASES[commodity.commodity_zh]);
+        if (!rawCase) {
             panel.innerHTML = "";
             return;
         }
+        
+        const cases = Array.isArray(rawCase) ? rawCase : [rawCase];
         
         let html = `<div class='section-label'>历史断供/冲击复盘</div>`;
         html += cases.map(c => `
@@ -576,6 +609,7 @@
                 <h3>${escapeHtml(c.title || '')}</h3>
                 <p class="event-summary">${escapeHtml(c.summary || '')}</p>
                 ${c.impact ? `<div class="event-impact"><div class="event-impact-label">核心影响</div><div class="event-impact-text">${escapeHtml(c.impact)}</div></div>` : ''}
+                ${c.source_name ? `<div class="event-source"><div class="event-source-label">来源：${escapeHtml(c.source_name)}</div></div>` : ''}
             </div>
         `).join("");
         
