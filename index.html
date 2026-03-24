@@ -117,12 +117,13 @@
       .treemap-shell { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
       .treemap { position: relative; min-height: 320px; border-radius: 16px; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); }
       
-      .treemap-block { position: absolute; padding: 0; overflow: hidden; transition: opacity 0.3s ease; border: 1px solid #FFFFFF; }
+      .treemap-block { position: absolute; padding: 0; overflow: hidden; transition: opacity 0.3s ease; border: 1px solid #FFFFFF; cursor: pointer; }
       .treemap-block-inner { position: relative; z-index: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 4px; padding: 4px; overflow: hidden; }
       
-      .treemap-name { font-size: 14px; font-weight: 800; line-height: 1.1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      /* === 增加了防溢出控制 === */
+      .treemap-name { font-size: 14px; font-weight: 800; line-height: 1.1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; max-width: 100%; word-break: break-all; }
       .treemap-value { font-size: 16px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-      .treemap-value-sub { font-size: 10px; font-weight: 700; opacity: 0.9; line-height: 1.3; white-space: nowrap; }
+      .treemap-value-sub { font-size: 10px; font-weight: 700; opacity: 0.9; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
       
       .treemap-block-compact .treemap-name { font-size: 12px; }
       .treemap-block-compact .treemap-value { font-size: 14px; }
@@ -139,7 +140,6 @@
       .sim-card-title { font-size: 12px; color: var(--sub); }
       .sim-reset { border: 0; background: transparent; color: var(--primary); font-size: 12px; font-weight: 500; cursor: pointer; padding: 0; }
       
-      /* --- 完美复刻的模拟断供说明卡片样式 --- */
       .sim-help { position: relative; }
       .sim-help summary {
         list-style: none; cursor: pointer; width: 24px; height: 24px; border-radius: 10px; 
@@ -423,7 +423,7 @@
         锡: { date: "2024-09", type: "矿山停产", title: "缅甸佤邦停产持续收紧全球锡原料", summary: "锡近年的典型扰动，几乎都绕不开缅甸佤邦矿山。", impact: "缅甸佤邦核心锡矿长期停产后，市场对锡精矿供应担忧升温，原料链稳定性成为交易核心。", source_name: "Reuters" },
         镍: { date: "2025-01", type: "供应过剩", title: "印尼主导的过剩格局压低镍价中枢", summary: "镍近两年的最强主线，是印尼产能扩张重塑全球定价。", impact: "印尼持续扩张产能导致全球镍市长期过剩，价格重心下移，市场开始关注印尼是否会主动控量。", source_name: "Reuters" },
         黄金: { date: "2025-02", type: "央行购金", title: "全球央行持续购金重塑黄金需求结构", summary: "黄金近年的代表性冲击，是央行购金与地缘避险共振。", impact: "央行保持高强度购金，叠加地缘与美元信用担忧，需求结构被重塑，金价多次刷新历史高位。", source_name: "新华社" },
-        煤炭: { date: "2025-06", type: "供需错配", title: "供给增长与替代能源扩张压低煤价中枢", summary: "煤炭典型扰动是供给走高、需求偏弱与替代能源扩张的共振。", impact: "全国原煤产量增长叠加煤炭进口创历史新高，新能源替代导致煤价中枢明显下移。", source_name: "新华网" },
+        煤炭: { date: "2025-06", type: "供需错配", title: "电力保供支点保障原煤产量稳定", summary: "原煤产量在“电力保供”背景下维持增长运行。", impact: "全国原煤产量增长叠加煤炭进口创历史新高，新能源替代导致煤价中枢明显下移。", source_name: "新华网" },
         燃料油: { date: "2026-03", type: "地缘冲击", title: "中东局势升级放大燃料油供应与运费风险", summary: "燃料油显著扰动多来自中东地缘、船燃供应和运费保费抬升。", impact: "霍尔木兹封锁预期下，全球海运高硫燃料油供应受扰，高低硫燃料油价格被共同推高。", source_name: "中信期货" },
         甲醇: { date: "2026-03", type: "地缘冲击", title: "霍尔木兹受扰放大甲醇进口收缩预期", summary: "甲醇关键冲击之一是海外装置与进口到港节奏受扰。", impact: "霍尔木兹航运停滞期间，甲醇主力合约连续涨停，体现市场对中东供应与进口收缩的高度敏感。", source_name: "第一财经" },
         纯碱: { date: "2024-07", type: "产能扩张", title: "新增产能释放重塑纯碱景气周期", summary: "纯碱代表性冲击是高利润诱发扩产，随后供给压力反制价格。", impact: "国内纯碱新增产能巨大，纯碱价格从高位回落，本质是新产能释放后的再平衡。", source_name: "证券时报" },
@@ -473,9 +473,8 @@
       }
 
       function selectedCommodity() { return allProducts.find(c => c.commodity_en === appliedCommodity) || allProducts[0] || null; }
-      function selectedCountryProfile() { const profiles = buildCountryProfiles(CORE_COUNTRIES, allProducts); return profiles.find(c => c.country_en === appliedCountry) || profiles[0] || null; }
-
-      // --- 【独家修改点 2】提取真正的中文译名，确保按钮显示纯中文 ---
+      
+      // 提取纯中文国家名，用于顶部按钮
       function getCountryZh(en) {
         if (COUNTRY_ZH_PATCH[en]) return COUNTRY_ZH_PATCH[en];
         for (let i = 0; i < allProducts.length; i++) {
@@ -484,6 +483,8 @@
         }
         return en;
       }
+      
+      function selectedCountryProfile() { const profiles = buildCountryProfiles(CORE_COUNTRIES, allProducts); return profiles.find(c => c.country_en === appliedCountry) || profiles[0] || null; }
 
       function updateButtonTexts() {
         if (appliedMode === 'commodity') {
@@ -494,7 +495,7 @@
           document.getElementById('btnModeCountry').innerHTML = `按国家/地区分类 <span class="caret">▼</span>`;
         } else {
           const contName = CONTINENT_ZH_MAP[appliedContinent] || appliedContinent;
-          const countryZh = getCountryZh(appliedCountry); // 使用找回的中文名
+          const countryZh = getCountryZh(appliedCountry); 
           document.getElementById('btnModeCountry').innerHTML = `${contName}-${countryZh} <span class="caret">▼</span>`;
           document.getElementById('btnModeCommodity').innerHTML = `按品种分类 <span class="caret">▼</span>`;
         }
@@ -658,14 +659,18 @@
         
         const html = layout.map(node => {
           const area = node.width * node.height;
-          const sizeClass = (node.width < 12 || node.height < 10 || area < 100) ? " treemap-block-micro" 
-                            : (area < 250) ? " treemap-block-tiny" 
-                            : (area < 500) ? " treemap-block-compact" : "";
+          // === 更严格的防溢出面积检测 ===
+          const sizeClass = (node.width < 16 || node.height < 14 || area < 150) ? " treemap-block-micro" 
+                            : (area < 300) ? " treemap-block-tiny" 
+                            : (area < 600) ? " treemap-block-compact" : "";
           
           const opacityStyle = node.isDisrupted ? "opacity: 0.5;" : "opacity: 1;";
           const fontColor = node.kind === "other" ? "#333" : "#fff";
 
-          return `<div class='treemap-block ${sizeClass}' style='left:${node.x}%;top:${node.y}%;width:${node.width}%;height:${node.height}%;background:${node.color};${opacityStyle}'>
+          // === 增加的点击交互弹窗文案 ===
+          const alertText = `${escapeHtml(node.label)}\\n占比：${node.kind === "gap" ? node.shareLabel.replace("%", "") + "%" : node.shareLabel}\\n绝对值：${escapeHtml(formatDisplayValue(node.value, commodity.unit))} ${escapeHtml(translateUnit(commodity.unit))}`;
+
+          return `<div class='treemap-block ${sizeClass}' style='left:${node.x}%;top:${node.y}%;width:${node.width}%;height:${node.height}%;background:${node.color};${opacityStyle}' title='${escapeHtml(node.label)}' onclick="alert('${alertText}')">
             <div class='treemap-block-inner' style='color:${fontColor}'><div><div class='treemap-name'>${escapeHtml(node.label)}</div></div>
             <div><div class='treemap-value'>${escapeHtml(formatDisplayValue(node.value, commodity.unit))}</div><div class='treemap-value-sub'>${node.shareLabel}</div></div></div></div>`;
         }).join("");
@@ -680,14 +685,12 @@
         simCard.style.display = "block";
         simBody.className = "";
         
-        // 【独家修改点 1】恢复你的断供推演文案
         const disruptedLabel = disruptedEntries.length === 1 ? "若该国家/地区断供" : "若这些国家/地区断供";
         const pillsHtml = disruptedEntries.map(e => `<span class='sim-pill'>${escapeHtml(toCountryZh(e.country_en, e.country_zh))}</span>`).join("");
         
         simBody.innerHTML = `<div class='sim-alert'>${disruptedLabel}，全球将出现 <strong>${gapPct.toFixed(2)}%</strong> 的绝对缺口。</div><div class='sim-meta'>剩余可供量：${formatDisplayValue(Math.max(remainingTotal, 0), commodity.unit)} ${translateUnit(commodity.unit)}</div><div class='sim-pills'>${pillsHtml}</div>`;
       }
 
-      // --- 【独家修改点 1】完美恢复你的历史事件面板和 fallback 文案 ---
       function renderEventPanel(commodity) {
         const panel = document.getElementById("eventPanel");
         if (!commodity || appliedMode !== "commodity") {
