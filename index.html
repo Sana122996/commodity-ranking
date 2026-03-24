@@ -40,7 +40,6 @@
       .brand-lockup { display: inline-flex; align-items: center; margin-bottom: 4px; }
       .brand-logo { display: block; width: 104px; height: auto; }
       
-      /* === 头图占位与标题排版（已修改为占满整个区域） === */
       .title-wrapper { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; }
       .title { 
         margin: 0; 
@@ -108,6 +107,7 @@
       
       .topic-tags { display: flex; flex-wrap: wrap; gap: 6px; }
       .topic-tag { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 999px; border: 1px solid rgba(var(--primary-rgb), 0.1); background: rgba(var(--primary-rgb), 0.05); color: var(--primary); font-size: 11px; font-weight: 500; line-height: 1; white-space: nowrap; }
+      .topic-tag-cool { background: rgba(var(--tertiary-rgb), 0.06); border-color: rgba(var(--tertiary-rgb), 0.12); color: var(--tertiary); }
 
       .hero-panel { background: #fff; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 16px; }
       .hero-title { color: var(--text); font-size: 15px; font-weight: 500; line-height: 1.45; }
@@ -312,7 +312,57 @@
       const UNIT_ZH_MAP = { "metric tons": "吨", "thousand metric tons": "千吨", "thousand metric dry tons": "千干吨", "ten thousand metric tons": "万吨", "million metric tons": "万吨", "million 480-lb bales": "百万包（480磅/包）", "million barrels per day": "万桶/日" };
       const VALUE_TYPE_ZH_MAP = { "Production": "产量" };
       
-      const HOT_TOPIC_TAGS = window.HOT_TOPIC_TAGS || { "原油": ["地缘政治核心"], "锡": ["半导体咽喉"] };
+      /* 完整补充了所有品种的热点标签 */
+      const HOT_TOPIC_TAGS = {
+        锡: ["半导体咽喉", "消费电子命脉"],
+        镓: ["芯片材料卡点", "军工半导体"],
+        锗: ["红外光学关键", "光纤通信材料"],
+        锂: ["新能源车核心", "储能链支点"],
+        钴: ["动力电池核心", "高镍三元材料"],
+        镍: ["不锈钢核心", "动力电池材料"],
+        铜: ["电网升级核心", "制造业血液"],
+        铝: ["轻量化骨架", "电力成本锚"],
+        铝土矿: ["电解铝上游命门", "氧化铝核心原料"],
+        电解铝: ["轻量化基石", "电力成本锚"],
+        铁矿石: ["黑色产业龙头", "钢铁成本命脉"],
+        石墨: ["负极材料核心", "电池链关键矿物"],
+        磷矿石: ["磷肥原料根基", "农业安全要素"],
+        钾盐: ["钾肥供应核心", "农化成本锚点"],
+        锰: ["钢铁合金基础", "电池正极辅材"],
+        钼: ["特钢强化关键", "高端制造合金"],
+        稀土: ["永磁材料核心", "军工高端制造"],
+        锑: ["阻燃剂核心", "光伏玻璃辅材"],
+        铅: ["铅酸电池基础", "储能备电材料"],
+        锌: ["镀锌防腐核心", "基建周期风向"],
+        白银: ["光伏导电核心", "避险贵金属"],
+        黄金: ["全球避险锚", "央行储备资产"],
+        原油: ["地缘政治核心", "工业血液"],
+        煤炭: ["电力保供支点", "工业燃料底盘"],
+        LNG: ["天然气贸易锚点", "欧洲能源安全"],
+        LPG: ["民生燃料", "化工裂解原料"],
+        "LNG（液化天然气）": ["天然气贸易锚点", "欧洲能源安全"],
+        "LPG（液化石油气）": ["民生燃料", "化工裂解原料"],
+        甲醇: ["煤化工枢纽", "烯烃链核心"],
+        PTA: ["涤纶产业中枢", "纺服化纤核心"],
+        乙二醇: ["聚酯链关键", "瓶片纤维原料"],
+        苯乙烯: ["家电塑料核心", "ABS产业链关键"],
+        纯苯: ["芳烃基础原料", "化工母体"],
+        PX: ["聚酯链咽喉", "芳烃核心中间体"],
+        "对二甲苯（PX）": ["聚酯链咽喉", "芳烃核心中间体"],
+        聚丙烯: ["包装材料核心", "家电汽车塑料"],
+        沥青: ["基建施工温度计", "道路建设关键"],
+        燃料油: ["船燃关键", "炼厂平衡变量"],
+        纯碱: ["玻璃成本锚", "光伏玻璃核心"],
+        大豆: ["饲料蛋白核心", "油脂定价锚"],
+        白糖: ["食品工业刚需", "天气题材高敏"],
+        棕榈油: ["全球植物油锚", "生柴原料"],
+        油菜籽: ["菜系油脂核心", "加菜链关键"],
+        苹果: ["鲜果消费代表", "天气敏感品"],
+        小麦: ["粮食安全主粮", "全球贸易敏感"],
+        玉米: ["饲料能源双属性", "农业链核心"],
+        棉花: ["纺织工业基石", "服装链风向"],
+        稻米: ["口粮安全底盘", "亚洲主粮"]
+      };
       
       const TREEMAP_COLORS = [
         "#5A82E6", "#6C90E8", "#4B76E3", "#7D9EEB", "#3D69E0", "#8EABED",
@@ -370,7 +420,10 @@
       function normalizeDisplayValue(value, unit) { const num = Number(value || 0); return (unit === "million metric tons" || unit === "million barrels per day") ? num * 100 : num; }
       function formatDisplayValue(value, unit) { return new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 2 }).format(normalizeDisplayValue(value, unit)); }
       function getTopicTags(name) { return HOT_TOPIC_TAGS[name] || ["全球供应链聚焦"]; }
-      function renderTopicTagsHtml(tags) { return tags.map(tag => `<span class='topic-tag'>${escapeHtml(tag)}</span>`).join(""); }
+      function renderTopicTagsHtml(tags) { 
+        if (!tags || !tags.length) return "";
+        return tags.map((tag, idx) => `<span class='topic-tag ${idx % 2 === 1 ? "topic-tag-cool" : ""}'>${escapeHtml(tag)}</span>`).join(""); 
+      }
       function setBoardTags(tags) { const el = document.getElementById("boardTags"); if (!el) return; if (!tags || !tags.length) { el.style.display = "none"; return; } el.innerHTML = renderTopicTagsHtml(tags); el.style.display = "flex"; }
 
       function getDisruptionSet(commodityCode) { if (!simulatedShutdowns.has(commodityCode)) simulatedShutdowns.set(commodityCode, new Set()); return simulatedShutdowns.get(commodityCode); }
