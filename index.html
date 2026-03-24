@@ -29,7 +29,6 @@
 
       .layout { min-height: 100vh; display: block; width: 100%; max-width: 100%; margin: 0 auto; background: #FFFFFF; }
 
-      /* === 恢复白底左对齐与大标题排版 === */
       .sidebar {
         border-bottom: 1px solid rgba(90, 130, 230, 0.12);
         background: #FFFFFF;
@@ -139,6 +138,23 @@
       .sim-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
       .sim-card-title { font-size: 12px; color: var(--sub); }
       .sim-reset { border: 0; background: transparent; color: var(--primary); font-size: 12px; font-weight: 500; cursor: pointer; padding: 0; }
+      
+      /* --- 完美复刻的模拟断供说明卡片样式 --- */
+      .sim-help { position: relative; }
+      .sim-help summary {
+        list-style: none; cursor: pointer; width: 24px; height: 24px; border-radius: 10px; 
+        border: 1px solid rgba(var(--primary-rgb), 0.1); background: rgba(var(--primary-rgb), 0.05); 
+        color: var(--primary); display: inline-flex; align-items: center; justify-content: center; 
+        font-size: 12px; font-weight: 700;
+      }
+      .sim-help summary::-webkit-details-marker { display: none; }
+      .sim-help-panel {
+        position: absolute; right: 0; top: calc(100% + 8px); width: min(280px, 78vw); 
+        padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(var(--primary-rgb), 0.08); 
+        background: #FFFFFF; color: var(--text); font-size: 12px; line-height: 1.6; 
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08); z-index: 5;
+      }
+
       .sim-alert { padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(var(--secondary-rgb), 0.1); background: rgba(var(--secondary-rgb), 0.04); color: var(--secondary); font-size: 12px; line-height: 1.6; }
       .sim-meta { margin-top: 8px; font-size: 12px; color: var(--sub); }
       .sim-pills { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -166,6 +182,7 @@
 
       .event-panel { display: grid; grid-template-columns: 1fr; gap: 14px; }
       .event-card { background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 14px; }
+      .event-card-fallback { border-style: dashed; }
       .event-topline { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
       .event-eyebrow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
       .event-kicker { font-size: 12px; font-weight: 500; color: var(--text); }
@@ -181,6 +198,7 @@
       .event-source a { color: var(--primary); text-decoration: none; font-size: 12px; font-weight: 500; }
 
       .footnote { margin-top: 8px; color: var(--sub); font-size: 12px; line-height: 1.5; }
+      .footnote-aux { margin-top: 4px; }
 
       @media (min-width: 1041px) {
         .layout { width: min(calc(100% - 40px), var(--page-max-width)); }
@@ -229,6 +247,12 @@
               <div class="sim-card-head">
                 <div class="sim-card-title">断供/制裁推演</div>
                 <div class="sim-card-tools">
+                  <details class="sim-help">
+                    <summary>?</summary>
+                    <div class="sim-help-panel">
+                      点击榜单中的“模拟停产”，即可推演单国/地区或多国/地区断供后的供应缺口与剩余份额变化。
+                    </div>
+                  </details>
                   <button class="sim-reset" id="resetSimulationBtn" type="button">清空模拟</button>
                 </div>
               </div>
@@ -241,7 +265,11 @@
         <section class="event-panel" id="eventPanel"></section>
 
         <p class="footnote">
-          数据说明：本内容数据均基于公开资料综合测算。其中，矿产及农产品数据主要参考全球权威行业部门公开估算数据；能化板块数据综合采纳国际能源监管组织等市场公开信息。
+          数据说明：本内容数据均基于公开资料综合测算。其中，矿产及农产品数据主要参考全球权威行业部门公开估算数据；能化板块（含原油、煤炭及各类化工衍生品）数据，综合采纳国际能源监管组织、各国官方统计局及知名行业咨询机构的公开信息。因多方信息源统计口径与更新节奏不同，数据可能存在细微偏差，相关内容仅供市场研究与参考。
+        </p>
+        <p class="footnote footnote-aux">
+          免责声明：本页面信息不构成任何投资建议、交易建议或风险担保，使用者应独立判断并自行承担相关风险。<br>
+          金十数据制作
         </p>
       </main>
     </div>
@@ -447,6 +475,16 @@
       function selectedCommodity() { return allProducts.find(c => c.commodity_en === appliedCommodity) || allProducts[0] || null; }
       function selectedCountryProfile() { const profiles = buildCountryProfiles(CORE_COUNTRIES, allProducts); return profiles.find(c => c.country_en === appliedCountry) || profiles[0] || null; }
 
+      // --- 【独家修改点 2】提取真正的中文译名，确保按钮显示纯中文 ---
+      function getCountryZh(en) {
+        if (COUNTRY_ZH_PATCH[en]) return COUNTRY_ZH_PATCH[en];
+        for (let i = 0; i < allProducts.length; i++) {
+            const entry = allProducts[i].entries.find(e => e.country_en === en);
+            if (entry && entry.country_zh) return toCountryZh(en, entry.country_zh);
+        }
+        return en;
+      }
+
       function updateButtonTexts() {
         if (appliedMode === 'commodity') {
           const commObj = allProducts.find(p => p.commodity_en === appliedCommodity);
@@ -456,7 +494,7 @@
           document.getElementById('btnModeCountry').innerHTML = `按国家/地区分类 <span class="caret">▼</span>`;
         } else {
           const contName = CONTINENT_ZH_MAP[appliedContinent] || appliedContinent;
-          const countryZh = toCountryZh(appliedCountry);
+          const countryZh = getCountryZh(appliedCountry); // 使用找回的中文名
           document.getElementById('btnModeCountry').innerHTML = `${contName}-${countryZh} <span class="caret">▼</span>`;
           document.getElementById('btnModeCommodity').innerHTML = `按品种分类 <span class="caret">▼</span>`;
         }
@@ -641,9 +679,15 @@
         if (appliedMode !== "commodity" || !disruptedEntries.length) { simCard.style.display = "none"; return; }
         simCard.style.display = "block";
         simBody.className = "";
-        simBody.innerHTML = `<div class='sim-alert'>若执行断供，全球将出现 <strong>${gapPct.toFixed(2)}%</strong> 的绝对缺口。</div><div class='sim-meta'>剩余可供量：${formatDisplayValue(remainingTotal, commodity.unit)} ${translateUnit(commodity.unit)}</div><div class='sim-pills'>${disruptedEntries.map(e => `<span class='sim-pill'>${escapeHtml(toCountryZh(e.country_en, e.country_zh))}</span>`).join("")}</div>`;
+        
+        // 【独家修改点 1】恢复你的断供推演文案
+        const disruptedLabel = disruptedEntries.length === 1 ? "若该国家/地区断供" : "若这些国家/地区断供";
+        const pillsHtml = disruptedEntries.map(e => `<span class='sim-pill'>${escapeHtml(toCountryZh(e.country_en, e.country_zh))}</span>`).join("");
+        
+        simBody.innerHTML = `<div class='sim-alert'>${disruptedLabel}，全球将出现 <strong>${gapPct.toFixed(2)}%</strong> 的绝对缺口。</div><div class='sim-meta'>剩余可供量：${formatDisplayValue(Math.max(remainingTotal, 0), commodity.unit)} ${translateUnit(commodity.unit)}</div><div class='sim-pills'>${pillsHtml}</div>`;
       }
 
+      // --- 【独家修改点 1】完美恢复你的历史事件面板和 fallback 文案 ---
       function renderEventPanel(commodity) {
         const panel = document.getElementById("eventPanel");
         if (!commodity || appliedMode !== "commodity") {
@@ -653,7 +697,17 @@
         
         const rawCase = EVENT_CASES[commodity.commodity_zh] || (window.EVENT_CASES && window.EVENT_CASES[commodity.commodity_zh]);
         if (!rawCase) {
-            panel.innerHTML = "";
+            panel.innerHTML = `
+                <article class='event-card event-card-fallback'>
+                    <div class='event-topline'>
+                        <div class='event-eyebrow'>
+                            <span class='event-kicker'>历史冲击案例</span>
+                        </div>
+                    </div>
+                    <h3>该品种的代表事件还在补充中</h3>
+                    <p class='event-summary'>当前先提供供应集中度、热点概念和断供推演。后续补入事件后，这里会直接展示“发生了什么”“当时冲击多大”“可否一键代入模拟”。</p>
+                </article>
+            `;
             return;
         }
         
@@ -661,19 +715,19 @@
         
         let html = `<div class='section-label'>历史断供/冲击复盘</div>`;
         html += cases.map(c => `
-            <div class="event-card">
+            <article class="event-card">
                 <div class="event-topline">
                     <div class="event-eyebrow">
-                        <span class="event-type">${escapeHtml(c.type || '历史事件')}</span>
-                        <span class="event-kicker">${escapeHtml(c.title || '')}</span>
+                        <span class="event-kicker">历史冲击案例</span>
+                        <span class="event-date">${escapeHtml(c.date || '')}</span>
                     </div>
-                    <span class="event-date">${escapeHtml(c.date || '')}</span>
+                    <span class="event-type">${escapeHtml(c.type || '历史事件')}</span>
                 </div>
                 <h3>${escapeHtml(c.title || '')}</h3>
                 <p class="event-summary">${escapeHtml(c.summary || '')}</p>
-                ${c.impact ? `<div class="event-impact"><div class="event-impact-label">核心影响</div><div class="event-impact-text">${escapeHtml(c.impact)}</div></div>` : ''}
+                ${c.impact ? `<div class="event-impact"><div class="event-impact-label">对该品种的冲击</div><div class="event-impact-text">${escapeHtml(c.impact)}</div></div>` : ''}
                 ${c.source_name ? `<div class="event-source"><div class="event-source-label">来源：${escapeHtml(c.source_name)}</div></div>` : ''}
-            </div>
+            </article>
         `).join("");
         
         panel.innerHTML = html;
