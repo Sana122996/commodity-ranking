@@ -6,10 +6,10 @@
     <title>全球大宗商品产量版图</title>
     <style>
       :root {
-        --primary: #235de6; 
+        --primary: #5A82E6; /* 修改点：全局主色调改为 5A82E6 */
         --secondary: #E02424;
         --tertiary: #057A55;
-        --primary-rgb: 35, 93, 230;
+        --primary-rgb: 90, 130, 230; /* 修改点：对应 5A82E6 的 RGB 值 */
         --secondary-rgb: 224, 36, 36;
         --tertiary-rgb: 5, 122, 85;
         --bg: #FFFFFF;
@@ -30,7 +30,7 @@
       .layout { min-height: 100vh; display: block; width: 100%; max-width: 100%; margin: 0 auto; background: #FFFFFF; }
 
       .sidebar {
-        border-bottom: 1px solid rgba(35, 93, 230, 0.12);
+        border-bottom: 1px solid rgba(90, 130, 230, 0.12);
         background: #FFFFFF;
         padding: 18px 14px 12px;
         display: flex; flex-direction: column; gap: 12px;
@@ -40,7 +40,6 @@
       .brand-lockup { display: inline-flex; align-items: center; margin-bottom: 4px; }
       .brand-logo { display: block; width: 104px; height: auto; }
       
-      /* === 头图占位与标题排版 === */
       .title-wrapper { display: flex; align-items: center; gap: 8px; }
       .title { 
         margin: 0; 
@@ -51,13 +50,12 @@
         font-family: "Source Han Serif Heavy", "Source Han Serif SC", "Noto Serif CJK SC", "思源宋体", serif;
       }
       .header-icon { 
-        width: 32px; /* 默认预留的占位大小，可自行调整 */
+        width: 32px; 
         height: 32px; 
         object-fit: contain; 
-        flex-shrink: 0; /* 确保不被标题挤压 */
+        flex-shrink: 0; 
       }
 
-      /* === 顶部双按钮 === */
       .mode-toolbar { display: flex; gap: 10px; margin-top: 4px; }
       .mode-btn {
         flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -67,7 +65,6 @@
       .mode-btn:not(.active) { background: #F1F5FF; color: #5A82E6; border: 1px solid #F1F5FF; }
       .mode-btn .caret { font-size: 10px; }
 
-      /* === 底部弹出分栏选择器 === */
       .picker-overlay {
         position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; 
         display: none; align-items: flex-end; justify-content: center; 
@@ -101,7 +98,6 @@
       .picker-col-right .picker-item.active { color: var(--primary); font-weight: 600; display: flex; justify-content: space-between; }
       .picker-col-right .picker-item.active::after { content: "✓"; color: var(--primary); }
 
-      /* === 看板主体 === */
       .main { padding: 14px 14px 20px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; }
       .header-row { display: flex; justify-content: flex-start; gap: 8px; align-items: flex-start; padding-top: 2px; }
       .title-stack { display: flex; flex-direction: column; gap: 6px; }
@@ -146,7 +142,6 @@
       .sim-pill { display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 999px; background: rgba(var(--tertiary-rgb), 0.05); border: 1px solid rgba(var(--tertiary-rgb), 0.1); color: var(--tertiary); font-size: 11px; font-weight: 700; }
       .sim-empty { display: none; }
 
-      /* === 下方排行榜样式 === */
       .ranking-item { background-color: #fff; border-radius: 8px; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
       .board .ranking-item:last-child { border-bottom: none; padding-bottom: 0; }
       .board .ranking-item:first-child { padding-top: 0; }
@@ -166,7 +161,6 @@
       .ranking-item.offline .percentage-value { color: var(--secondary); }
       .section-label { margin: 16px 0 8px; color: var(--sub); font-size: 12px; font-weight: 700; }
 
-      /* === 事件面板样式 === */
       .event-panel { display: grid; grid-template-columns: 1fr; gap: 14px; }
       .event-card { background: #FFFFFF; border: 1px solid rgba(var(--primary-rgb), 0.08); border-radius: 16px; padding: 14px; }
       .event-topline { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -187,7 +181,7 @@
 
       @media (min-width: 1041px) {
         .layout { width: min(calc(100% - 40px), var(--page-max-width)); }
-        .sidebar { border-right: 0; border-bottom: 1px solid rgba(35, 93, 230, 0.12); padding: 18px; }
+        .sidebar { border-right: 0; border-bottom: 1px solid rgba(90, 130, 230, 0.12); padding: 18px; }
         .main { padding: 16px 18px 22px; }
         .picker-dialog { border-radius: 16px; margin: auto; height: 500px; transform: translateY(20px); }
         .picker-overlay { align-items: center; } 
@@ -310,7 +304,6 @@
 
       const COUNTRY_ZH_PATCH = { "Côte d’Ivoire": "科特迪瓦", Algeria: "阿尔及利亚", Belgium: "比利时", Brunei: "文莱", "Chinese Taipei": "中国台湾地区", Egypt: "埃及", "European Union": "欧盟", Germany: "德国", Greece: "希腊", Guatemala: "危地马拉", Israel: "以色列", Jamaica: "牙买加", Italy: "意大利", Japan: "日本", Kuwait: "科威特", Libya: "利比亚", "Korea, North": "朝鲜", "Korea, Republic of": "韩国", Kyrgyzstan: "吉尔吉斯斯坦", Malaysia: "马来西亚", Mali: "马里", Mongolia: "蒙古", Norway: "挪威", Pakistan: "巴基斯坦", "Papua New Guinea": "巴布亚新几内亚", Poland: "波兰", Portugal: "葡萄牙", Rwanda: "卢旺达", Senegal: "塞内加尔", Singapore: "新加坡", Spain: "西班牙", "Sri Lanka": "斯里兰卡", Tanzania: "坦桑尼亚", Tunisia: "突尼斯", "United Kingdom": "英国", Uzbekistan: "乌兹别克斯坦", Vietnam: "越南", Zambia: "赞比亚", "South Korea": "韩国", "United Arab Emirates": "阿联酋", "Iran": "伊朗", "Saudi Arabia": "沙特阿拉伯", "Russia": "俄罗斯", "India": "印度", "Indonesia": "印尼" };
       
-      /* 补全了大量的国旗映射 */
       const FLAG_EMOJI_MAP = { 
         "中国": "🇨🇳", "美国": "🇺🇸", "澳大利亚": "🇦🇺", "俄罗斯": "🇷🇺", "印度": "🇮🇳", "巴西": "🇧🇷", "欧盟": "🇪🇺", "阿根廷": "🇦🇷", "印尼": "🇮🇩", "印度尼西亚": "🇮🇩", "加拿大": "🇨🇦", "墨西哥": "🇲🇽", "秘鲁": "🇵🇪", "智利": "🇨🇱", "沙特阿拉伯": "🇸🇦", "日本": "🇯🇵", "韩国": "🇰🇷", "德国": "🇩🇪", "英国": "🇬🇧", "法国": "🇫🇷", "伊朗": "🇮🇷", "伊拉克": "🇮🇶", "阿联酋": "🇦🇪", "卡塔尔": "🇶🇦", "科威特": "🇰🇼", "马来西亚": "🇲🇾", "泰国": "🇹🇭", "越南": "🇻🇳", "菲律宾": "🇵🇭", "新加坡": "🇸🇬", "南非": "🇿🇦", "刚果（金）": "🇨🇩", "几内亚": "🇬🇳", "马达加斯加": "🇲🇬", "尼日利亚": "🇳🇬", "玻利维亚": "🇧🇴", "波兰": "🇵🇱", "哈萨克斯坦": "🇰🇿", "白俄罗斯": "🇧🇾", "阿曼": "🇴🇲", "缅甸": "🇲🇲", "塔吉克斯坦": "🇹🇯", "中国台湾地区": "🇹🇼", "中国台湾": "🇹🇼", "科特迪瓦": "🇨🇮", "阿尔及利亚": "🇩🇿", "比利时": "🇧🇪", "文莱": "🇧🇳", "埃及": "🇪🇬", "希腊": "🇬🇷", "危地马拉": "🇬🇹", "以色列": "🇮🇱", "牙买加": "🇯🇲", "意大利": "🇮🇹", "利比亚": "🇱🇾", "朝鲜": "🇰🇵", "吉尔吉斯斯坦": "🇰🇬", "马里": "🇲🇱", "蒙古": "🇲🇳", "挪威": "🇳🇴", "巴基斯坦": "🇵🇰", "巴布亚新几内亚": "🇵🇬", "葡萄牙": "🇵🇹", "卢旺达": "🇷🇼", "塞内加尔": "🇸🇳", "西班牙": "🇪🇸", "斯里兰卡": "🇱🇰", "坦桑尼亚": "🇹🇿", "突尼斯": "🇹🇳", "乌兹别克斯坦": "🇺🇿", "赞比亚": "🇿🇲", "哥伦比亚": "🇨🇴", "委内瑞拉": "🇻🇪", "孟加拉国": "🇧🇩", "老挝": "🇱🇦", "叙利亚": "🇸🇾", "瑞典": "🇸🇪", "芬兰": "🇫🇮", "冰岛": "🇮🇸", "奥地利": "🇦🇹", "乌克兰": "🇺🇦", "保加利亚": "🇧🇬", "多哥": "🇹🇬", "肯尼亚": "🇰🇪", "博茨瓦纳": "🇧🇼", "安哥拉": "🇦🇴", "赤道几内亚": "🇬🇶", "毛里塔尼亚": "🇲🇷", "新西兰": "🇳🇿", "新喀里多尼亚": "🇳🇨", "布基纳法索": "🇧🇫", "土耳其": "🇹🇷", "摩洛哥": "🇲🇦", "加蓬": "🇬🇦", "莫桑比克": "🇲🇿", "特立尼达和多巴哥": "🇹🇹" 
       };
@@ -320,8 +313,9 @@
       
       const HOT_TOPIC_TAGS = window.HOT_TOPIC_TAGS || { "原油": ["地缘政治核心"], "锡": ["半导体咽喉"] };
       
+      /* 修改点：树图前列色彩修改为以 5A82E6 体系的明度渐变 */
       const TREEMAP_COLORS = [
-        "#1A56DB", "#2C7BE5", "#183B67", "#4693D9", "#1F5999", "#34A4EB",
+        "#5A82E6", "#6C90E8", "#4B76E3", "#7D9EEB", "#3D69E0", "#8EABED",
         "#C2593F", "#F7D273", "#DE4922", "#5A6C7A", "#007491", 
         "#F59F00", "#7C8A96", "#E57E5A", "#E5A93B", "#A63512"
       ];
@@ -497,7 +491,6 @@
 
       document.getElementById('btnModeCommodity').addEventListener('click', () => openPicker('commodity'));
       document.getElementById('btnModeCountry').addEventListener('click', () => openPicker('country'));
-
 
       function getCommoditySimulationState(commodity) {
         if (!commodity) return { disruptionSet: new Set(), disruptedEntries: [], activeEntries: [], disruptedValue: 0, remainingTotal: 0, simulationActive: false, gapPct: 0, rankedEntries: [] };
