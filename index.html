@@ -12,7 +12,7 @@
         --primary-rgb: 35, 93, 230;
         --secondary-rgb: 224, 36, 36;
         --tertiary-rgb: 5, 122, 85;
-        --bg: #FFFFFF; /* 强制绝对白底 */
+        --bg: #FFFFFF;
         --text: #111111;
         --sub: rgba(17, 17, 17, 0.58);
         --page-max-width: 500px;
@@ -24,14 +24,14 @@
         margin: 0;
         font-family: "Inter", "Roboto", "Noto Sans CJK SC", sans-serif;
         color: var(--text);
-        background: #FFFFFF; /* 强制白底 */
+        background: #FFFFFF;
       }
 
       .layout { min-height: 100vh; display: block; width: 100%; max-width: 100%; margin: 0 auto; background: #FFFFFF; }
 
       .sidebar {
         border-bottom: 1px solid rgba(35, 93, 230, 0.12);
-        background: #FFFFFF; /* 去除渐变，强制白底 */
+        background: #FFFFFF;
         padding: 18px 14px 12px;
         display: flex; flex-direction: column; gap: 12px;
       }
@@ -39,7 +39,23 @@
       .masthead { display: flex; flex-direction: column; gap: 4px; }
       .brand-lockup { display: inline-flex; align-items: center; margin-bottom: 4px; }
       .brand-logo { display: block; width: 104px; height: auto; }
-      .title { margin: 0; font-size: 31px; line-height: 1.08; letter-spacing: -0.045em; font-weight: 800; }
+      
+      /* === 头图占位与标题排版 === */
+      .title-wrapper { display: flex; align-items: center; gap: 8px; }
+      .title { 
+        margin: 0; 
+        font-size: 31px; 
+        line-height: 1.08; 
+        letter-spacing: -0.045em; 
+        font-weight: 900; 
+        font-family: "Source Han Serif Heavy", "Source Han Serif SC", "Noto Serif CJK SC", "思源宋体", serif;
+      }
+      .header-icon { 
+        width: 32px; /* 默认预留的占位大小，可自行调整 */
+        height: 32px; 
+        object-fit: contain; 
+        flex-shrink: 0; /* 确保不被标题挤压 */
+      }
 
       /* === 顶部双按钮 === */
       .mode-toolbar { display: flex; gap: 10px; margin-top: 4px; }
@@ -48,7 +64,7 @@
         height: 44px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
       }
       .mode-btn.active { background: var(--primary); color: #ffffff; border: 1px solid var(--primary); }
-      .mode-btn:not(.active) { background: #f2f6ff; color: var(--primary); border: 1px solid #dce5fc; }
+      .mode-btn:not(.active) { background: #F1F5FF; color: #5A82E6; border: 1px solid #F1F5FF; }
       .mode-btn .caret { font-size: 10px; }
 
       /* === 底部弹出分栏选择器 === */
@@ -185,7 +201,10 @@
           <div class="brand-lockup">
             <img class="brand-logo" src="./logo-jin10.svg" alt="金十数据 Logo" />
           </div>
-          <h1 class="title">全球大宗商品产量版图</h1>
+          <div class="title-wrapper">
+            <h1 class="title">全球大宗商品产量版图</h1>
+            <img class="header-icon" src="./header-icon-placeholder.png" alt="头图" />
+          </div>
         </div>
 
         <div class="mode-toolbar">
@@ -290,20 +309,23 @@
       const CORE_COUNTRIES = ["China", "United States", "European Union", "Argentina", "Bangladesh", "Belarus", "Bolivia", "Belgium", "Gabon", "Ghana", "Guinea", "Jordan", "Kazakhstan", "Mongolia", "Mexico", "Morocco", "Philippines", "Algeria", "Brunei", "Chinese Taipei", "Germany", "Greece", "Italy", "Japan", "Kuwait", "Singapore", "United Kingdom", "Thailand", "Turkey", "Malaysia", "Colombia", "Nigeria", "Vietnam", "Saudi Arabia", "United Arab Emirates", "Qatar", "Iran", "Iraq", "Libya", "Norway", "Poland", "India", "Bahrain", "South Korea", "Netherlands", "Trinidad and Tobago", "Oman", "Chile", "Australia", "Indonesia", "Congo (Kinshasa)", "Peru", "Russia", "Canada", "South Africa", "Burma", "Brazil", "Zimbabwe"];
 
       const COUNTRY_ZH_PATCH = { "Côte d’Ivoire": "科特迪瓦", Algeria: "阿尔及利亚", Belgium: "比利时", Brunei: "文莱", "Chinese Taipei": "中国台湾地区", Egypt: "埃及", "European Union": "欧盟", Germany: "德国", Greece: "希腊", Guatemala: "危地马拉", Israel: "以色列", Jamaica: "牙买加", Italy: "意大利", Japan: "日本", Kuwait: "科威特", Libya: "利比亚", "Korea, North": "朝鲜", "Korea, Republic of": "韩国", Kyrgyzstan: "吉尔吉斯斯坦", Malaysia: "马来西亚", Mali: "马里", Mongolia: "蒙古", Norway: "挪威", Pakistan: "巴基斯坦", "Papua New Guinea": "巴布亚新几内亚", Poland: "波兰", Portugal: "葡萄牙", Rwanda: "卢旺达", Senegal: "塞内加尔", Singapore: "新加坡", Spain: "西班牙", "Sri Lanka": "斯里兰卡", Tanzania: "坦桑尼亚", Tunisia: "突尼斯", "United Kingdom": "英国", Uzbekistan: "乌兹别克斯坦", Vietnam: "越南", Zambia: "赞比亚", "South Korea": "韩国", "United Arab Emirates": "阿联酋", "Iran": "伊朗", "Saudi Arabia": "沙特阿拉伯", "Russia": "俄罗斯", "India": "印度", "Indonesia": "印尼" };
-      const FLAG_EMOJI_MAP = { "中国": "🇨🇳", "美国": "🇺🇸", "澳大利亚": "🇦🇺", "俄罗斯": "🇷🇺", "印度": "🇮🇳", "巴西": "🇧🇷", "欧盟": "🇪🇺", "阿根廷": "🇦🇷", "印尼": "🇮🇩", "加拿大": "🇨🇦", "墨西哥": "🇲🇽", "秘鲁": "🇵🇪", "智利": "🇨🇱", "沙特阿拉伯": "🇸🇦", "日本": "🇯🇵", "韩国": "🇰🇷", "德国": "🇩🇪", "英国": "🇬🇧", "法国": "🇫🇷", "伊朗": "🇮🇷", "伊拉克": "🇮🇶", "阿联酋": "🇦🇪", "卡塔尔": "🇶🇦", "科威特": "🇰🇼", "马来西亚": "🇲🇾", "泰国": "🇹🇭", "越南": "🇻🇳", "菲律宾": "🇵🇭", "新加坡": "🇸🇬", "南非": "🇿🇦", "刚果（金）": "🇨🇩", "几内亚": "🇬🇳", "马达加斯加": "🇲🇬", "尼日利亚": "🇳🇬", "玻利维亚": "🇧🇴", "波兰": "🇵🇱", "哈萨克斯坦": "🇰🇿", "白俄罗斯": "🇧🇾", "阿曼": "🇴🇲", "缅甸": "🇲🇲", "塔吉克斯坦": "🇹🇯", "中国台湾地区": "🇹🇼" };
+      
+      /* 补全了大量的国旗映射 */
+      const FLAG_EMOJI_MAP = { 
+        "中国": "🇨🇳", "美国": "🇺🇸", "澳大利亚": "🇦🇺", "俄罗斯": "🇷🇺", "印度": "🇮🇳", "巴西": "🇧🇷", "欧盟": "🇪🇺", "阿根廷": "🇦🇷", "印尼": "🇮🇩", "印度尼西亚": "🇮🇩", "加拿大": "🇨🇦", "墨西哥": "🇲🇽", "秘鲁": "🇵🇪", "智利": "🇨🇱", "沙特阿拉伯": "🇸🇦", "日本": "🇯🇵", "韩国": "🇰🇷", "德国": "🇩🇪", "英国": "🇬🇧", "法国": "🇫🇷", "伊朗": "🇮🇷", "伊拉克": "🇮🇶", "阿联酋": "🇦🇪", "卡塔尔": "🇶🇦", "科威特": "🇰🇼", "马来西亚": "🇲🇾", "泰国": "🇹🇭", "越南": "🇻🇳", "菲律宾": "🇵🇭", "新加坡": "🇸🇬", "南非": "🇿🇦", "刚果（金）": "🇨🇩", "几内亚": "🇬🇳", "马达加斯加": "🇲🇬", "尼日利亚": "🇳🇬", "玻利维亚": "🇧🇴", "波兰": "🇵🇱", "哈萨克斯坦": "🇰🇿", "白俄罗斯": "🇧🇾", "阿曼": "🇴🇲", "缅甸": "🇲🇲", "塔吉克斯坦": "🇹🇯", "中国台湾地区": "🇹🇼", "中国台湾": "🇹🇼", "科特迪瓦": "🇨🇮", "阿尔及利亚": "🇩🇿", "比利时": "🇧🇪", "文莱": "🇧🇳", "埃及": "🇪🇬", "希腊": "🇬🇷", "危地马拉": "🇬🇹", "以色列": "🇮🇱", "牙买加": "🇯🇲", "意大利": "🇮🇹", "利比亚": "🇱🇾", "朝鲜": "🇰🇵", "吉尔吉斯斯坦": "🇰🇬", "马里": "🇲🇱", "蒙古": "🇲🇳", "挪威": "🇳🇴", "巴基斯坦": "🇵🇰", "巴布亚新几内亚": "🇵🇬", "葡萄牙": "🇵🇹", "卢旺达": "🇷🇼", "塞内加尔": "🇸🇳", "西班牙": "🇪🇸", "斯里兰卡": "🇱🇰", "坦桑尼亚": "🇹🇿", "突尼斯": "🇹🇳", "乌兹别克斯坦": "🇺🇿", "赞比亚": "🇿🇲", "哥伦比亚": "🇨🇴", "委内瑞拉": "🇻🇪", "孟加拉国": "🇧🇩", "老挝": "🇱🇦", "叙利亚": "🇸🇾", "瑞典": "🇸🇪", "芬兰": "🇫🇮", "冰岛": "🇮🇸", "奥地利": "🇦🇹", "乌克兰": "🇺🇦", "保加利亚": "🇧🇬", "多哥": "🇹🇬", "肯尼亚": "🇰🇪", "博茨瓦纳": "🇧🇼", "安哥拉": "🇦🇴", "赤道几内亚": "🇬🇶", "毛里塔尼亚": "🇲🇷", "新西兰": "🇳🇿", "新喀里多尼亚": "🇳🇨", "布基纳法索": "🇧🇫", "土耳其": "🇹🇷", "摩洛哥": "🇲🇦", "加蓬": "🇬🇦", "莫桑比克": "🇲🇿", "特立尼达和多巴哥": "🇹🇹" 
+      };
+      
       const UNIT_ZH_MAP = { "metric tons": "吨", "thousand metric tons": "千吨", "thousand metric dry tons": "千干吨", "ten thousand metric tons": "万吨", "million metric tons": "万吨", "million 480-lb bales": "百万包（480磅/包）", "million barrels per day": "万桶/日" };
       const VALUE_TYPE_ZH_MAP = { "Production": "产量" };
       
       const HOT_TOPIC_TAGS = window.HOT_TOPIC_TAGS || { "原油": ["地缘政治核心"], "锡": ["半导体咽喉"] };
       
-      /* 【修改点2】色板扩充：前6名全部使用不同明度的深蓝/浅蓝，确保蓝色为主基调，辅以暖色点缀 */
       const TREEMAP_COLORS = [
         "#1A56DB", "#2C7BE5", "#183B67", "#4693D9", "#1F5999", "#34A4EB",
         "#C2593F", "#F7D273", "#DE4922", "#5A6C7A", "#007491", 
         "#F59F00", "#7C8A96", "#E57E5A", "#E5A93B", "#A63512"
       ];
 
-      /* 【修改点1】补全的历史大事件全集 */
       const EVENT_CASES = {
         原油: { date: "2026-03", type: "地缘冲突", title: "霍尔木兹梗阻引发原油供应危机预期", summary: "原油最直接、最剧烈的冲击，仍然来自关键海峡受阻与地缘军事升级。", impact: "新华社多篇报道均指出，霍尔木兹海峡承担全球约五分之一的原油运输。2026 年 3 月海峡一度几乎停航，国际原油价格迅速突破 100 美元/桶，全球原油供应安全预期明显恶化。", source_name: "新华网" },
         LNG: { date: "2026-03", type: "航运梗阻", title: "霍尔木兹受阻放大 LNG 供应风险", summary: "LNG 近年的典型冲击，来自霍尔木兹海峡这一全球天然气航运要道。", impact: "印度现为全球第四大 LNG 买家，其中大量进口依赖中东；霍尔木兹海峡航运受阻后，卡塔尔等中东供应缩减，印度被迫优先保障关键行业和居民用气。", source_name: "新华网" },
@@ -377,7 +399,6 @@
       function selectedCommodity() { return allProducts.find(c => c.commodity_en === appliedCommodity) || allProducts[0] || null; }
       function selectedCountryProfile() { const profiles = buildCountryProfiles(CORE_COUNTRIES, allProducts); return profiles.find(c => c.country_en === appliedCountry) || profiles[0] || null; }
 
-      // --- 顶部按钮文案动态更新 ---
       function updateButtonTexts() {
         if (appliedMode === 'commodity') {
           const commObj = allProducts.find(p => p.commodity_en === appliedCommodity);
@@ -393,7 +414,6 @@
         }
       }
 
-      // --- Picker 逻辑 ---
       const pickerModal = document.getElementById('customPickerModal');
       
       function openPicker(mode) {
@@ -513,7 +533,6 @@
       function buildTreemapNodes(commodity, simState) {
         const nodes = [];
         
-        // 前 15 名用于展示
         const top15 = commodity.entries.slice(0, 15);
         const activeNodes = top15.map((e, idx) => {
             const isDisrupted = simState.disruptionSet.has(e.country_en);
@@ -529,7 +548,6 @@
         });
         nodes.push(...activeNodes);
 
-        // 第 16 名及以后合并为“其他”
         const otherEntries = commodity.entries.slice(15);
         if (otherEntries.length > 0) {
             const otherValue = otherEntries.reduce((s, e) => s + Number(e.value || 0), 0);
@@ -555,7 +573,6 @@
         
         const html = layout.map(node => {
           const area = node.width * node.height;
-          // 防溢出检测
           const sizeClass = (node.width < 12 || node.height < 10 || area < 100) ? " treemap-block-micro" 
                             : (area < 250) ? " treemap-block-tiny" 
                             : (area < 500) ? " treemap-block-compact" : "";
@@ -580,7 +597,6 @@
         simBody.innerHTML = `<div class='sim-alert'>若执行断供，全球将出现 <strong>${gapPct.toFixed(2)}%</strong> 的绝对缺口。</div><div class='sim-meta'>剩余可供量：${formatDisplayValue(remainingTotal, commodity.unit)} ${translateUnit(commodity.unit)}</div><div class='sim-pills'>${disruptedEntries.map(e => `<span class='sim-pill'>${escapeHtml(toCountryZh(e.country_en, e.country_zh))}</span>`).join("")}</div>`;
       }
 
-      // 完美读取本地 EVENT_CASES，渲染历史冲击面板
       function renderEventPanel(commodity) {
         const panel = document.getElementById("eventPanel");
         if (!commodity || appliedMode !== "commodity") {
